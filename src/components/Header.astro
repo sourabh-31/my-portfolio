@@ -1,0 +1,112 @@
+---
+const pathname = Astro.url.pathname;
+const isAbout = pathname === "/about" || pathname === "/about/";
+---
+
+<header class="relative z-10 bg-transparent">
+  <div
+    class="max-w-5xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between"
+  >
+    <a href="/" class="group inline-flex items-end" aria-label="Home">
+      <span
+        class="font-logo text-[34px] leading-none text-fg group-hover:text-accent-2 transition-colors duration-500"
+      >
+        Sh
+      </span>
+      <span class="font-logo text-[34px] leading-none text-accent-2 -ml-0.5">
+        ;
+      </span>
+    </a>
+
+    <nav class="flex items-center gap-7 md:gap-9">
+      <a
+        href="/#projects"
+        data-scroll-to="projects"
+        class="nav-item text-[14px] tracking-tight text-muted hover:text-fg cursor-pointer"
+      >
+        Work
+      </a>
+      <a
+        href="/about"
+        class:list={[
+          "nav-item text-[14px] tracking-tight",
+          isAbout ? "active text-fg" : "text-muted hover:text-fg",
+        ]}
+      >
+        About
+      </a>
+      <button
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        class="cursor-pointer text-muted hover:text-fg transition-colors duration-400"
+      >
+        <!-- Sun: shown in dark mode -->
+        <svg
+          id="icon-sun"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="hidden"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+          ></path>
+        </svg>
+        <!-- Moon: shown in light mode -->
+        <svg
+          id="icon-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("theme-toggle");
+  const sun = document.getElementById("icon-sun");
+  const moon = document.getElementById("icon-moon");
+
+  function applyTheme(dark: boolean) {
+    document.documentElement.classList.toggle("dark", dark);
+    sun?.classList.toggle("hidden", !dark);
+    moon?.classList.toggle("hidden", dark);
+  }
+
+  applyTheme(localStorage.getItem("theme") === "dark");
+
+  toggle?.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "light" : "dark");
+    applyTheme(!isDark);
+  });
+
+  // On home page: smooth scroll to #projects instead of navigating
+  const workLink = document.querySelector<HTMLAnchorElement>(
+    "[data-scroll-to='projects']",
+  );
+  workLink?.addEventListener("click", (e) => {
+    const target = document.getElementById("projects");
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+</script>

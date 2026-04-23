@@ -1,0 +1,115 @@
+---
+import { SITE } from "../data/site";
+---
+
+<footer class="mt-24 md:mt-32 border-t border-border">
+  <div class="max-w-5xl mx-auto px-6 md:px-10 pt-12 md:pt-16 pb-6 md:pb-8">
+    <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-8">
+        <p class="font-display text-3xl md:text-4xl leading-[1.1] text-fg">
+          Say hi. I&rsquo;d love to hear what you&rsquo;re making.
+        </p>
+        <a
+          href={`mailto:${SITE.email}`}
+          class="inline-flex items-center gap-1.5 mt-6 font-mono-ui text-sm text-fg link-underline-on"
+        >
+          {SITE.email}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M7 7h10v10"></path>
+            <path d="M7 17 17 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <div class="md:col-span-4 md:text-right">
+        <p
+          class="font-mono-ui text-[11px] uppercase tracking-wider text-muted mb-3"
+        >
+          Elsewhere
+        </p>
+        <ul class="space-y-1.5">
+          {
+            SITE.socials.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center gap-1 text-sm link-underline"
+                >
+                  {s.label}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="opacity-60"
+                  >
+                    <path d="M7 7h10v10" />
+                    <path d="M7 17 17 7" />
+                  </svg>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-dashed border-border">
+      <p
+        class="inline-flex items-center gap-1.5 text-[13px] text-muted nav-item"
+      >
+        Handmade with
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          stroke="none"
+          style="fill: var(--color-accent-2); translate: 0 1px;"
+        >
+          <path
+            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+          ></path>
+        </svg>
+        on quiet afternoons.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>("a[href^='mailto:']").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const mailto = link.href;
+      const email = mailto.replace("mailto:", "");
+      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+
+      window.location.href = mailto;
+
+      // If the browser kept focus after 600ms, no mail client handled it — open Gmail
+      setTimeout(() => {
+        if (document.hasFocus()) {
+          window.open(gmail, "_blank", "noopener,noreferrer");
+        }
+      }, 600);
+    });
+  });
+</script>
