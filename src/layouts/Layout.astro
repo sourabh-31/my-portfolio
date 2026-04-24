@@ -3,8 +3,10 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/globals.css";
 
-const fontStylesheet =
-  "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Figtree:wght@300..900&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@400..700&display=swap";
+const frauncesFontUrl =
+  "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&display=block";
+const uiFontsUrl =
+  "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@400..700&display=swap";
 ---
 
 <!doctype html>
@@ -17,8 +19,10 @@ const fontStylesheet =
     <title>Sourabh Haldar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href={fontStylesheet} />
-    <link rel="stylesheet" href={fontStylesheet} />
+    <link rel="preload" as="style" href={frauncesFontUrl} />
+    <link rel="stylesheet" href={frauncesFontUrl} />
+    <link rel="preload" as="style" href={uiFontsUrl} />
+    <link rel="stylesheet" href={uiFontsUrl} />
     <!-- Prevent flash of wrong theme -->
     <script is:inline>
       if (localStorage.getItem("theme") === "dark") {
