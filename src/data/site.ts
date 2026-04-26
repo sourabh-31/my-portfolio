@@ -1,4 +1,5 @@
 import pinseiImg from "../assets/pinsei.png";
+import forgeImg from "../assets/forge.png";
 import pharmeaseImg from "../assets/pharmease.png";
 
 export const SITE = {
@@ -79,6 +80,16 @@ export const PROJECTS = [
       "A bookmark manager for saving and finding links quickly. Built with a focus on speed, clarity, and a calm interface.",
     cta: { label: "Visit", href: "https://www.pinsei.com" },
     image: pinseiImg,
+  },
+  {
+    id: "forge",
+    title: "Forge",
+    tag: "web app",
+    year: "2026",
+    description:
+      "A visual prompt chain builder to design and test AI workflows. Fast, minimal, and built for real-world use.",
+    cta: { label: "Visit", href: "https://prompt-chain-builder.vercel.app" },
+    image: forgeImg,
   },
   {
     id: "pharmease",
