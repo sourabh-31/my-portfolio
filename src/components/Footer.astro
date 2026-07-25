@@ -72,9 +72,7 @@ import { SITE } from "../data/site";
     </div>
 
     <div class="mt-12 pt-6 border-t border-dashed border-border">
-      <p
-        class="inline-flex items-center gap-1.5 text-[13px] text-muted nav-item"
-      >
+      <p class="inline-flex items-center gap-1.5 text-[13px] text-muted">
         Handmade with
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,21 +93,23 @@ import { SITE } from "../data/site";
 </footer>
 
 <script>
-  document.querySelectorAll<HTMLAnchorElement>("a[href^='mailto:']").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const mailto = link.href;
-      const email = mailto.replace("mailto:", "");
-      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+  document
+    .querySelectorAll<HTMLAnchorElement>("a[href^='mailto:']")
+    .forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const mailto = link.href;
+        const email = mailto.replace("mailto:", "");
+        const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
 
-      window.location.href = mailto;
+        window.location.href = mailto;
 
-      // If the browser kept focus after 600ms, no mail client handled it — open Gmail
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          window.open(gmail, "_blank", "noopener,noreferrer");
-        }
-      }, 600);
+        // If the browser kept focus after 600ms, no mail client handled it — open Gmail
+        setTimeout(() => {
+          if (document.hasFocus()) {
+            window.open(gmail, "_blank", "noopener,noreferrer");
+          }
+        }, 600);
+      });
     });
-  });
 </script>

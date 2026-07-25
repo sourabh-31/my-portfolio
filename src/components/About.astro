@@ -22,24 +22,6 @@ import { ABOUT, SITE } from "../data/site";
     <p
       class="font-mono-ui text-[11px] uppercase tracking-wider text-muted mb-4"
     >
-      A few things I believe
-    </p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      {
-        ABOUT.principles.map((pr) => (
-          <div class="principle-card p-5 rounded-xl border border-border">
-            <p class="font-display text-xl text-fg">{pr.title}</p>
-            <p class="text-sm text-muted leading-relaxed mt-1.5">{pr.body}</p>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-
-  <div class="mt-14">
-    <p
-      class="font-mono-ui text-[11px] uppercase tracking-wider text-muted mb-4"
-    >
       Tools I reach for
     </p>
     <div class="flex flex-wrap gap-2">
@@ -57,7 +39,7 @@ import { ABOUT, SITE } from "../data/site";
     <p
       class="font-mono-ui text-[11px] uppercase tracking-wider text-muted mb-4"
     >
-      A short timeline
+      Journey so far
     </p>
     <ol>
       {

@@ -14,27 +14,9 @@ export const SITE = {
 export const ABOUT = {
   intro: "Hi, I'm Sourabh.",
   paragraphs: [
-    "I'm a frontend-focused software developer. I build for web and mobile, mostly the parts people actually interact with.",
-    "I like interfaces that feel a little handmade, something that makes you pause for a second. I care about typography, accessibility, performance, and the details that make things feel right.",
-    "When I'm not at a keyboard, I’m usually playing games or reading. I like building things that feel simple, clear, and fast.",
-  ],
-  principles: [
-    {
-      title: "Make it obvious",
-      body: "People shouldn’t have to think about how to use it.",
-    },
-    {
-      title: "Details matter",
-      body: "Spacing, timing, states. That’s where the feel comes from.",
-    },
-    {
-      title: "Keep it light",
-      body: "Fast, responsive, and not doing more than it needs to.",
-    },
-    {
-      title: "Ship the simple thing",
-      body: "Start small, get it right, then build on top.",
-    },
+    "I'm a frontend-focused software engineer with 2 years of professional experience building modern web and mobile applications. I enjoy creating the experiences people interact with every day, where design meets engineering.",
+    "I like interfaces that feel a little handmade, something that makes you pause for a second. I care about typography, accessibility, performance, and the small details that make software feel intuitive.",
+    "When I'm not at a keyboard, I'm usually playing games or reading. I enjoy building products that are simple, clear, and fast.",
   ],
   stack: [
     "React",
@@ -48,7 +30,7 @@ export const ABOUT = {
     "Redux",
     "Zustand",
     "Express.js",
-    "PostgreSQL",
+    "MySQL",
   ],
   timeline: [
     {
@@ -65,7 +47,7 @@ export const ABOUT = {
     },
     {
       year: "2022",
-      what: "Started with frontend, learning and building with HTML, CSS, and JavaScript.",
+      what: "Started with frontend, learning and building with HTML, CSS, JavaScript and ReactJS.",
     },
   ],
 };
