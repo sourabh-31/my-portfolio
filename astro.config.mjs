@@ -1,10 +1,30 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
-// https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: "Archivo",
+      cssVariable: "--font-archivo",
+      weights: [400, 600, 800],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Space Grotesk",
+      cssVariable: "--font-space-grotesk",
+      weights: [400, 500, 700],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Geist Mono",
+      cssVariable: "--font-geist-mono",
+      weights: [400, 500, 700],
+    },
+  ],
 });

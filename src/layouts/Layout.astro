@@ -2,27 +2,21 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/globals.css";
-
-const frauncesFontUrl =
-  "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&display=block";
-const uiFontsUrl =
-  "https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@400..700&display=swap";
+import { Font } from "astro:assets";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <Font preload cssVariable="--font-archivo" />
+    <Font preload cssVariable="--font-space-grotesk" />
+    <Font preload cssVariable="--font-geist-mono" />
     <title>Sourabh Haldar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href={frauncesFontUrl} />
-    <link rel="stylesheet" href={frauncesFontUrl} />
-    <link rel="preload" as="style" href={uiFontsUrl} />
-    <link rel="stylesheet" href={uiFontsUrl} />
+
     <!-- Prevent flash of wrong theme -->
     <script is:inline>
       if (localStorage.getItem("theme") === "dark") {
@@ -30,9 +24,19 @@ const uiFontsUrl =
       }
     </script>
   </head>
-  <body>
-    <Header />
-    <slot />
-    <Footer />
+
+  <body class="font-sans text-pretty">
+    <div class="relative min-h-screen">
+      <div class="relative z-[1]">
+        <Header />
+
+        <main
+          class="mx-auto max-w-180 px-6 pt-18 pb-8 max-[640px]:px-5 max-[640px]:pt-11 max-[640px]:pb-10"
+        >
+          <slot />
+          <Footer />
+        </main>
+      </div>
+    </div>
   </body>
 </html>

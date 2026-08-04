@@ -1,6 +1,6 @@
 # Sourabh Haldar — Portfolio
 
-Personal portfolio site built with Astro. Features project showcases, an about page, and links to work.
+Personal one-page portfolio site built with Astro. Features an intro, skills, project showcases, experience timeline, and a contact section.
 
 **Live site:** [sourabhhaldar.com](https://sourabhhaldar.com)
 
@@ -8,7 +8,6 @@ Personal portfolio site built with Astro. Features project showcases, an about p
 
 - [Astro](https://astro.build) — static site framework
 - TypeScript
-- Tailwind CSS
 
 ## Project Structure
 
@@ -18,21 +17,19 @@ Personal portfolio site built with Astro. Features project showcases, an about p
 │   ├── favicon.svg
 │   └── sourabh_haldar_resume.pdf
 ├── src/
-│   ├── assets/          # Project images
-│   ├── components/      # Astro components (Header, Footer, Home, About)
+│   ├── components/      # Astro components (Header, Footer, Home)
 │   ├── data/
-│   │   └── site.ts      # All content — projects, about, socials
+│   │   └── site.ts      # All content — projects, jobs, socials
 │   ├── layouts/
 │   │   └── Layout.astro
 │   ├── pages/
-│   │   ├── index.astro
-│   │   └── about.astro
+│   │   └── index.astro
 │   └── styles/
 │       └── globals.css
 └── package.json
 ```
 
-To update content (projects, bio, stack, timeline), edit [src/data/site.ts](src/data/site.ts).
+To update content (projects, experience, socials), edit [src/data/site.ts](src/data/site.ts).
 
 ## Commands
 

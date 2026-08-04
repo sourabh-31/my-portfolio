@@ -1,369 +1,386 @@
 ---
-import { Image } from "astro:assets";
-import { PROJECTS } from "../data/site";
-
-const WHITE_KEYS = [
-  { note: "C4", freq: 261.63, label: "A" },
-  { note: "D4", freq: 293.66, label: "S" },
-  { note: "E4", freq: 329.63, label: "D" },
-  { note: "F4", freq: 349.23, label: "F" },
-  { note: "G4", freq: 392.0, label: "G" },
-  { note: "A4", freq: 440.0, label: "H" },
-  { note: "B4", freq: 493.88, label: "J" },
-  { note: "C5", freq: 523.25, label: "K" },
-  { note: "D5", freq: 587.33, label: "L" },
-  { note: "E5", freq: 659.25, label: ";" },
-];
-
-const BLACK_KEYS = [
-  { note: "C#4", freq: 277.18, after: 0, label: "W" },
-  { note: "D#4", freq: 311.13, after: 1, label: "E" },
-  { note: "F#4", freq: 369.99, after: 3, label: "T" },
-  { note: "G#4", freq: 415.3, after: 4, label: "Y" },
-  { note: "A#4", freq: 466.16, after: 5, label: "U" },
-  { note: "C#5", freq: 554.37, after: 7, label: "O" },
-  { note: "D#5", freq: 622.25, after: 8, label: "P" },
-];
-
-const whiteWidthPct = 100 / WHITE_KEYS.length;
+import Image from "astro/components/Image.astro";
+import { SITE, PROJECTS, JOBS } from "../data/site";
 ---
 
 <!-- Hero -->
-<section class="max-w-3xl mx-auto px-6 md:px-10 pt-24 md:pt-36">
-  <div>
-    <h1
-      class="font-display text-[32px] leading-[1.3] md:text-[44px] md:leading-tight text-fg tracking-tight"
+<header class="flex flex-col gap-5">
+  <h1
+    class="font-heading ml-[-0.04em] m-0 text-[clamp(38px,6.4vw,58px)] leading-[1.06] font-bold tracking-[-0.02em]"
+  >
+    Hi, I'm Sourabh 👋
+  </h1>
+  <p
+    class="m-0 text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]"
+  >
+    Frontend engineer turning complex ideas into products people genuinely enjoy
+    using. Happiest when a hard problem finally clicks, or when I'm losing
+    gracefully at a video game. JK 😉. I don't lose often.
+  </p>
+  <div
+    class="mt-2 grid grid-cols-3 gap-3.5 min-[461px]:max-[760px]:grid-cols-2 max-[460px]:grid-cols-1"
+  >
+    <a
+      href={`mailto:${SITE.email}`}
+      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
     >
-      I'm{" "}
-      <a href="/about" class="font-semibold link-underline-on">
-        Sourabh Haldar
-      </a>
-      , a frontend engineer with{" "}
-      <span class="font-semibold">2 years of professional experience</span>{" "}
-      building modern web and mobile applications with a strong focus on{" "}
-      <span class="text-muted">design</span>,{" "}
-      <span class="text-muted">usability</span>, and{" "}
-      <span class="text-muted">performance</span>.
-    </h1>
-  </div>
-
-  <div class="mt-14 md:mt-20 select-none" id="hero-piano">
-    <div class="flex items-center justify-between gap-3 mb-3">
-      <span
-        class="font-mono-ui text-[11px] uppercase tracking-wider text-muted"
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       >
-        a playful thing
+        <rect width="20" height="16" x="2" y="4" rx="0"></rect>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+      </svg>
+      Email me
+    </a>
+    <a
+      href={SITE.resumeHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
+    >
+      Resume / CV
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M7 7h10v10"></path>
+        <path d="M7 17 17 7"></path>
+      </svg>
+    </a>
+    <a
+      href="#projects"
+      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
+    >
+      View projects
+    </a>
+  </div>
+</header>
+
+<!-- About -->
+<section id="about" class="pt-18 max-[640px]:pt-14">
+  <h2
+    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+  >
+    <span aria-hidden="true" class="text-[0.85em]">📌</span>
+    Who I am
+  </h2>
+  <div
+    class="flex flex-col gap-5 text-[16px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
+  >
+    <p class="m-0">
+      I'm a <span class="text-ink font-bold">frontend-focused engineer</span> with
+      2+ years of professional experience building modern web and mobile applications.
+      Over the past couple of years, I've built products in {" "}
+      <span class="bg-accent/25"> AdTech </span>, {" "}
+      <span class="bg-accent/25"> trading </span>, and {" "}
+      <span class="bg-accent/25"> affiliate marketing </span>, learning how to
+      make complex products easier for people to use.
+    </p>
+
+    <p class="m-0">
+      I like interfaces that feel a little
+      <span class="text-ink font-bold"> handmade</span>, something that makes
+      you pause for a second. Behind every polished screen is a series of small
+      decisions and hard problems. That's the part I enjoy most.
+    </p>
+
+    <p class="m-0">
+      I'm always chasing that point where thoughtful engineering fades into the
+      background and all that's left is a product that simply <span
+        class="text-ink font-bold">feels right to use.</span
+      >
+    </p>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="pt-18 max-[640px]:pt-14">
+  <h2
+    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+  >
+    <span aria-hidden="true" class="text-[0.85em]">📌</span>
+    What I work with
+  </h2>
+
+  <div class="border-ink bg-panel border-2 shadow-[7px_7px_0_var(--color-ink)]">
+    <div
+      class="flex items-center justify-between border-b border-[rgba(243,242,242,0.15)] px-4 py-2.5"
+    >
+      <span class="font-mono text-[12px] text-[rgba(243,242,242,0.6)]">
+        skills.ts
       </span>
-      <span class="font-mono-ui text-[11px] text-muted hidden sm:inline">
-        click keys or tap A-L on your keyboard
-      </span>
+
+      <div class="flex gap-1.5">
+        <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
+        <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
+        <span class="bg-accent h-2 w-2"></span>
+      </div>
     </div>
 
     <div
-      class="relative h-44 md:h-52 rounded-lg bg-surface border border-border overflow-hidden transition-colors duration-400"
-      aria-label="Playable jazz piano"
+      class="font-mono overflow-x-auto py-5 text-[14px] leading-6 text-[#f3f2f2] max-[640px]:text-[12.5px]"
     >
-      <div class="absolute inset-0 flex">
-        {
-          WHITE_KEYS.map((key) => (
-            <button
-              type="button"
-              class="relative flex-1 border-r last:border-r-0 border-border flex items-end justify-center pb-3 bg-transparent hover:bg-surface-2 data-[active=true]:bg-accent-soft transition-colors duration-400 data-[active=true]:duration-150"
-              data-piano-key
-              data-note={key.note}
-              data-freq={key.freq}
-              aria-label={key.note}
-            >
-              <span class="font-mono-ui text-[10px] text-muted transition-colors duration-400">
-                {key.label}
-              </span>
-            </button>
-          ))
-        }
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          1
+        </span>
+
+        <span class="whitespace-pre">
+          <span class="text-accent font-bold">const</span>{" skills = {"}
+        </span>
       </div>
 
-      <div class="absolute inset-0 pointer-events-none">
-        {
-          BLACK_KEYS.map((key) => {
-            const left = (key.after + 1) * whiteWidthPct;
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          2
+        </span>
 
-            return (
-              <button
-                type="button"
-                class="pointer-events-auto absolute top-0 h-[60%] w-7 sm:w-8 -translate-x-1/2 rounded-b-md bg-fg data-[active=true]:bg-accent text-[10px] font-mono-ui text-bg flex items-end justify-center pb-1 transition-colors duration-400 data-[active=true]:duration-150"
-                style={`left: ${left}%;`}
-                data-piano-key
-                data-note={key.note}
-                data-freq={key.freq}
-                aria-label={key.note}
-              >
-                {key.label}
-              </button>
-            );
-          })
-        }
+        <span class="whitespace-pre">
+          {"  frontend:  ["}
+          <span class="text-accent">'React'</span>{", "}
+          <span class="text-accent">'Next.js'</span>{", "}
+          <span class="text-accent">'TypeScript'</span>{", "}
+          <span class="text-accent">'Astro'</span>
+          {"],"}
+        </span>
+      </div>
+
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          3
+        </span>
+
+        <span class="whitespace-pre">
+          {"  styling:   ["}
+          <span class="text-accent">'Tailwind CSS'</span>
+          {"],"}
+        </span>
+      </div>
+
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          4
+        </span>
+
+        <span class="whitespace-pre">
+          {"  animation: ["}
+          <span class="text-accent">'GSAP'</span>{", "}
+          <span class="text-accent">'Framer Motion'</span>
+          {"],"}
+        </span>
+      </div>
+
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          5
+        </span>
+
+        <span class="whitespace-pre">
+          {"  state:     ["}
+          <span class="text-accent">'TanStack Query'</span>{", "}
+          <span class="text-accent">'Redux'</span>{", "}
+          <span class="text-accent">'Zustand'</span>
+          {"],"}
+        </span>
+      </div>
+
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          6
+        </span>
+
+        <span class="whitespace-pre">
+          {"  backend:   ["}
+          <span class="text-accent">'Express.js'</span>{", "}
+          <span class="text-accent">'MySQL'</span>
+          {"],"}
+        </span>
+      </div>
+
+      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+        <span
+          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+        >
+          7
+        </span>
+
+        <span class="whitespace-pre">
+          {"} "}
+          <span class="text-accent font-bold">as const</span>
+          {";"}
+        </span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Projects -->
-<section
-  id="projects"
-  class="max-w-5xl mx-auto px-6 md:px-10 mt-16 md:mt-24 pt-4 md:pt-12"
->
-  <div class="flex items-end justify-between mb-8">
-    <div>
-      <p class="font-mono-ui text-[11px] uppercase tracking-wider text-muted">
-        Projects
-      </p>
-      <h2 class="font-display text-3xl md:text-4xl mt-2 text-fg">
-        Small things, made with care.
-      </h2>
-    </div>
-    <span class="font-mono-ui text-[11px] text-muted hidden md:inline">
-      {PROJECTS.length} selected
-    </span>
-  </div>
-
-  <ul class="relative" id="projects-list">
+<section id="projects" class="pt-18 max-[640px]:pt-14">
+  <h2
+    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+  >
+    <span aria-hidden="true" class="text-[0.85em]">📌</span>
+    Things I've built
+  </h2>
+  <div class="flex flex-col gap-14">
     {
-      PROJECTS.map((p, i) => (
-        <li
-          class="project-row group relative"
-          data-rotation={i % 2 === 0 ? -2 : 2}
-        >
-          <a
-            href={p.cta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="grid grid-cols-12 items-center gap-4 py-6 md:py-7"
-          >
-            <span class="col-span-1 font-mono-ui text-[11px] text-muted tabular-nums">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <div class="col-span-7 md:col-span-5">
-              <h3 class="font-display text-2xl md:text-3xl text-fg transition-transform duration-500 ease-out group-hover:translate-x-1">
-                {p.title}
-              </h3>
-              <p class="font-mono-ui text-[11px] uppercase tracking-wider text-muted mt-1">
-                {p.tag}
-              </p>
-            </div>
-            <p class="hidden md:block col-span-4 text-sm text-muted leading-relaxed">
-              {p.description}
-            </p>
-            <div class="col-span-4 md:col-span-2 flex items-center justify-end gap-3">
-              <span class="font-mono-ui text-[11px] text-muted tabular-nums">
-                {p.year}
-              </span>
-              <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-border bg-surface group-hover:bg-fg group-hover:text-bg transition-colors">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M7 7h10v10" />
-                  <path d="M7 17 17 7" />
-                </svg>
-              </span>
-            </div>
-          </a>
-
-          <div
-            class="pointer-events-none absolute right-6 md:right-12 w-48 md:w-64 aspect-4/3 rounded-lg overflow-hidden border border-border shadow-2xl z-60"
-            style="top: 50%; opacity: 0; visibility: hidden; filter: blur(8px); transform: translate(14px, -50%) rotate(0deg) scale(0.92); transition: opacity 720ms cubic-bezier(0.16, 1, 0.3, 1), transform 820ms cubic-bezier(0.16, 1, 0.3, 1), filter 720ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 820ms;"
-            data-preview
-          >
-            <Image
-              src={p.image}
-              alt=""
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
+      PROJECTS.map((project) => (
+        <article class="flex flex-col gap-4">
+          <div class="group relative before:absolute before:-inset-0.75 before:content-['']">
+            <figure class="border-ink m-0 overflow-hidden border-2 transition-[translate,box-shadow] duration-120 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 group-hover:shadow-[7px_7px_0_var(--color-ink)]">
+              <div class="font-heading flex aspect-video w-full items-center justify-center bg-[color-mix(in_srgb,var(--color-ink)_6%,var(--color-paper))] text-[12px] tracking-[0.04em] text-[color-mix(in_srgb,var(--color-ink)_45%,transparent)] uppercase">
+                <Image
+                  src={project.imgSrc}
+                  alt={project.title}
+                  width={800}
+                  height={450}
+                />
+              </div>
+            </figure>
           </div>
-        </li>
+          <div class="flex flex-wrap items-baseline justify-between gap-4">
+            <h3 class="font-heading m-0 text-[20px] font-bold">
+              {project.title}
+            </h3>
+            <span class="flex items-baseline gap-5">
+              <a
+                href={project.codeHref}
+                class="border-ink hover:border-accent hover:text-accent border-b-2 pb-0.5 text-[13px] tracking-[0.06em] uppercase no-underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Code
+              </a>
+              <a
+                href={project.visitHref}
+                class="border-ink hover:border-accent hover:text-accent border-b-2 pb-0.5 text-[13px] tracking-[0.06em] uppercase no-underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit ↗
+              </a>
+            </span>
+          </div>
+          <p class="m-0 max-w-[65ch] text-[15px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
+            {project.description}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="text-tag-ink px-2.5 py-1 text-[12px] tracking-wider bg-[rgba(236,48,19,0.14)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </article>
       ))
     }
-  </ul>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience" class="pt-18 max-[640px]:pt-14">
+  <h2
+    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+  >
+    <span aria-hidden="true" class="text-[0.85em]">📌</span>
+    Where I've been
+  </h2>
+  <div class="flex flex-col">
+    {
+      JOBS.map((job) => (
+        <div class="border-ink/20 grid grid-cols-[140px_1fr] gap-x-6 gap-y-2 border-t-2 py-6 max-[640px]:grid-cols-1 max-[640px]:gap-1.5">
+          <p class="m-0 text-[13px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_55%,transparent)] font-features-['tnum'_1]">
+            {job.dates}
+          </p>
+          <div class="flex flex-col gap-1.5">
+            <p class="font-heading m-0 text-[16px] font-bold">
+              {job.role} · {job.company}
+            </p>
+            <p class="m-0 text-[14px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_70%,transparent)]">
+              {job.summary}
+            </p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="pt-18 max-[640px]:pt-14">
+  <h2
+    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+  >
+    <span aria-hidden="true" class="text-[0.85em]">📌</span>
+    Let's talk
+  </h2>
+  <div
+    class="border-ink bg-accent text-paper border-[3px] shadow-[8px_8px_0_var(--color-ink)]"
+  >
+    <div class="px-6 py-9 max-[640px]:px-5 max-[640px]:py-7">
+      <h3
+        class="font-heading ml-[-0.04em] m-0 mb-4 text-[clamp(28px,4.5vw,44px)] leading-[1.02] font-bold tracking-[-0.01em] uppercase"
+      >
+        Let's build<br />something.
+      </h3>
+      <p class="font-heading m-0 mb-6 text-[15px] font-bold">
+        The fastest way to reach me is email. I read everything, even the weird
+        ones.
+      </p>
+      <a
+        href={`mailto:${SITE.email}`}
+        class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-3 border-2 px-6 py-4 text-[15px] font-bold tracking-[0.06em] uppercase no-underline"
+      >
+        {SITE.email} →
+      </a>
+    </div>
+  </div>
 </section>
 
 <script>
-  const KEY_MAP = {
-    a: "C4",
-    s: "D4",
-    d: "E4",
-    f: "F4",
-    g: "G4",
-    h: "A4",
-    j: "B4",
-    k: "C5",
-    l: "D5",
-    ";": "E5",
-    w: "C#4",
-    e: "D#4",
-    t: "F#4",
-    y: "G#4",
-    u: "A#4",
-    o: "C#5",
-    p: "D#5",
-  };
-
-  const heroPiano = document.getElementById("hero-piano");
-  const pianoButtons = Array.from(
-    heroPiano?.querySelectorAll<HTMLButtonElement>("[data-piano-key]") ?? [],
-  );
-  const pianoButtonsByNote = new Map(
-    pianoButtons.map((button) => [button.dataset.note, button]),
-  );
-  let audioContext: AudioContext | null = null;
-
-  function ensureAudioContext() {
-    const AudioContextCtor =
-      window.AudioContext || (window as any).webkitAudioContext;
-
-    if (!AudioContextCtor) return null;
-
-    audioContext ??= new AudioContextCtor();
-
-    if (audioContext.state === "suspended") {
-      void audioContext.resume();
-    }
-
-    return audioContext;
-  }
-
-  function playJazz(freq: number) {
-    const ctx = ensureAudioContext();
-    if (!ctx) return;
-
-    const now = ctx.currentTime;
-    const master = ctx.createGain();
-    master.gain.setValueAtTime(0.0001, now);
-    master.gain.exponentialRampToValueAtTime(0.2, now + 0.04);
-    master.gain.exponentialRampToValueAtTime(0.0001, now + 1.9);
-    master.connect(ctx.destination);
-
-    const vib = ctx.createOscillator();
-    vib.frequency.value = 5.5;
-
-    const vibG = ctx.createGain();
-    vibG.gain.value = 4;
-    vib.connect(vibG);
-
-    const o1 = ctx.createOscillator();
-    o1.type = "triangle";
-    o1.frequency.value = freq;
-
-    const o2 = ctx.createOscillator();
-    o2.type = "sine";
-    o2.frequency.value = freq * 2;
-
-    const o2g = ctx.createGain();
-    o2g.gain.value = 0.12;
-
-    vibG.connect(o1.frequency);
-    vibG.connect(o2.frequency);
-
-    const filter = ctx.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1700, now);
-    filter.frequency.exponentialRampToValueAtTime(650, now + 1.6);
-
-    o1.connect(filter);
-    o2.connect(o2g).connect(filter);
-    filter.connect(master);
-
-    o1.start(now);
-    o2.start(now);
-    vib.start(now);
-    o1.stop(now + 2);
-    o2.stop(now + 2);
-    vib.stop(now + 2);
-  }
-
-  function setActive(button: HTMLButtonElement) {
-    button.dataset.active = "true";
-
-    window.setTimeout(() => {
-      delete button.dataset.active;
-    }, 220);
-  }
-
-  function triggerPianoKey(button: HTMLButtonElement) {
-    const freq = Number(button.dataset.freq);
-    if (!Number.isFinite(freq)) return;
-
-    playJazz(freq);
-    setActive(button);
-  }
-
-  pianoButtons.forEach((button) => {
-    button.addEventListener("pointerdown", (event) => {
-      if (event.button > 0) return;
-
-      event.preventDefault();
-      triggerPianoKey(button);
-    });
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.repeat) return;
-
-    const note = KEY_MAP[event.key.toLowerCase() as keyof typeof KEY_MAP];
-    const button = pianoButtonsByNote.get(note);
-
-    if (!button) return;
-
-    event.preventDefault();
-    triggerPianoKey(button);
-  });
-
-  const items = document.querySelectorAll<HTMLLIElement>("#projects-list li");
-
-  items.forEach((item) => {
-    const preview = item.querySelector<HTMLElement>("[data-preview]");
-    const rotation = item.dataset.rotation ?? "0";
-
-    item.addEventListener("mouseenter", () => {
-      if (preview) {
-        preview.style.visibility = "visible";
-        preview.style.transitionDelay = "0s, 0s, 0s, 0s";
-        preview.style.opacity = "1";
-        preview.style.filter = "blur(0)";
-        preview.style.transform = `translate(0, -50%) rotate(${rotation}deg) scale(1)`;
-      }
-    });
-
-    item.addEventListener("mouseleave", () => {
-      if (preview) {
-        preview.style.opacity = "0";
-        preview.style.filter = "blur(8px)";
-        preview.style.visibility = "hidden";
-        preview.style.transitionDelay = "0s, 0s, 0s, 820ms";
-        preview.style.transform = `translate(14px, -50%) rotate(0deg) scale(0.92)`;
-      }
-    });
-  });
-
+  // Try the system mail client first; if nothing takes focus within 600ms,
+  // fall back to opening the compose window in Gmail's web UI.
   document
-    .getElementById("projects-list")
-    ?.addEventListener("mouseleave", () => {
-      items.forEach((item) => {
-        const preview = item.querySelector<HTMLElement>("[data-preview]");
-        if (preview) {
-          preview.style.opacity = "0";
-          preview.style.filter = "blur(8px)";
-          preview.style.visibility = "hidden";
-          preview.style.transitionDelay = "0s, 0s, 0s, 820ms";
-          preview.style.transform = `translate(14px, -50%) rotate(0deg) scale(0.92)`;
-        }
+    .querySelectorAll<HTMLAnchorElement>("a[href^='mailto:']")
+    .forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const mailto = link.href;
+        const email = mailto.replace("mailto:", "");
+        const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+
+        window.location.href = mailto;
+
+        setTimeout(() => {
+          if (document.hasFocus()) {
+            window.open(gmail, "_blank", "noopener,noreferrer");
+          }
+        }, 600);
       });
     });
 </script>
