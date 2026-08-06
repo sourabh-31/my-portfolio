@@ -14,7 +14,7 @@ export default defineConfig({
       cssVariable: "--font-archivo",
       weights: [400, 600, 800],
       styles: ["normal"],
-      display: "optional",
+      display: "block",
     },
     {
       provider: fontProviders.google(),
@@ -22,7 +22,7 @@ export default defineConfig({
       cssVariable: "--font-space-grotesk",
       weights: [400, 500, 700],
       styles: ["normal"],
-      display: "optional",
+      display: "block",
     },
     {
       provider: fontProviders.google(),
@@ -30,7 +30,7 @@ export default defineConfig({
       cssVariable: "--font-geist-mono",
       weights: [400, 500, 700],
       styles: ["normal"],
-      display: "optional",
+      display: "block",
     },
   ],
 });
