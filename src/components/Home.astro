@@ -1,5 +1,5 @@
 ---
-import Image from "astro/components/Image.astro";
+import { Image } from "astro:assets";
 import { SITE, PROJECTS, JOBS } from "../data/site";
 ---
 
@@ -256,8 +256,9 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
                 <Image
                   src={project.imgSrc}
                   alt={project.title}
-                  width={800}
-                  height={450}
+                  loading="lazy"
+                  decoding="async"
+                  quality="low"
                 />
               </div>
             </figure>
