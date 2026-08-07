@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import "../styles/globals.css";
 import { Font } from "astro:assets";
 ---
@@ -27,16 +25,7 @@ import { Font } from "astro:assets";
 
   <body class="font-sans text-pretty">
     <div class="relative min-h-screen">
-      <div class="relative z-[1]">
-        <Header />
-
-        <main
-          class="mx-auto max-w-180 px-6 pt-18 pb-8 max-[640px]:px-5 max-[640px]:pt-11 max-[640px]:pb-10"
-        >
-          <slot />
-          <Footer />
-        </main>
-      </div>
+      <slot />
     </div>
   </body>
 </html>

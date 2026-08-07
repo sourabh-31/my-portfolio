@@ -1,5 +1,6 @@
 ---
 import { SITE } from "../data/site";
+import logo from "../assets/logo.svg";
 ---
 
 <div
@@ -11,8 +12,32 @@ import { SITE } from "../data/site";
 
 <nav
   aria-label="Elsewhere"
-  class="font-heading mx-auto flex max-w-180 items-center gap-5 px-6 pt-7 text-sm font-medium"
+  class="font-heading flex items-center gap-5 px-6 pt-7 text-sm font-medium"
 >
+  <a href="/" aria-label="Home" class="inline-flex items-center pr-2">
+    <img src={logo.src} alt="" width="34" height="34" />
+  </a>
+  <a
+    href={SITE.githubHref}
+    class="hover:text-accent inline-flex items-center gap-1.25 no-underline"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Blog
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M7 7h10v10"></path>
+      <path d="M7 17 17 7"></path>
+    </svg>
+  </a>
   <a
     href={SITE.githubHref}
     class="hover:text-accent inline-flex items-center gap-1.25 no-underline"

@@ -1,0 +1,18 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="relative z-1 mx-auto max-w-3xl">
+    <Header />
+
+    <main
+      class="px-6 pt-18 pb-8 max-[640px]:px-5 max-[640px]:pt-11 max-[640px]:pb-10"
+    >
+      <slot />
+      <Footer />
+    </main>
+  </div>
+</Layout>
