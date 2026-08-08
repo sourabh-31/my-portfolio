@@ -4,10 +4,25 @@ import tailwindcss from "@tailwindcss/vite";
 
 import cloudflare from "@astrojs/cloudflare";
 
+import mdx from "@astrojs/mdx";
+
+import expressiveCode from "astro-expressive-code";
+
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+
+  integrations: [
+    expressiveCode({
+      themes: ["slack-dark"],
+    }),
+    mdx(),
+  ],
+
+  adapter: cloudflare({
+    imageService: "compile",
+  }),
 
   fonts: [
     {
@@ -75,8 +90,4 @@ export default defineConfig({
       },
     },
   ],
-
-  adapter: cloudflare({
-    imageService: "compile",
-  }),
 });

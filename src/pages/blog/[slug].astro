@@ -1,0 +1,183 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { SITE } from "../../data/site";
+import "../../styles/blog.css";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: {
+      slug: post.id,
+    },
+    props: {
+      post,
+    },
+  }));
+}
+
+const { post } = Astro.props;
+const { title, description, publishDate, readingTime, tags, cover } = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter((heading) => heading.depth === 2);
+---
+
+<BlogLayout>
+  <a
+    href="/blog"
+    class="font-heading group inline-flex items-center gap-2.5 text-sm leading-5 font-medium text-ink/62 no-underline transition-colors duration-160 hover:text-accent"
+  >
+    <span
+      class="inline-flex transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1.25"
+    >
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5M11 18l-6-6 6-6"></path>
+      </svg>
+    </span>
+    All writing
+  </a>
+
+  <header
+    class="flex max-w-180 flex-col gap-5.5 border-b border-ink/28 pt-10 pb-8.5"
+  >
+    <h1
+      class="font-heading m-0 ml-[-0.04em] text-[clamp(34px,5.2vw,52px)] leading-[1.05] font-bold tracking-tight"
+    >
+      {title}
+    </h1>
+    <p class="text-[18.5px] leading-7.5 text-ink/72">
+      {description}
+    </p>
+    <div
+      class="font-heading mt-1.5 flex items-center gap-4 text-sm leading-5 font-medium text-ink/58"
+    >
+      <span>{publishDate}</span>
+      <span aria-hidden="true" class="bg-accent h-1.25 w-1.25 shrink-0"></span>
+      <span>{readingTime} min read</span>
+      <span aria-hidden="true" class="h-1.25 w-1.25 shrink-0 bg-ink/30"></span>
+      <span>{tags.join(" · ")}</span>
+    </div>
+  </header>
+
+  {
+    cover && (
+      <div class="mt-9 max-w-180 overflow-hidden">
+        <Image
+          src={cover}
+          alt={title}
+          class="h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
+          quality="mid"
+          class="rounded-xl"
+        />
+      </div>
+    )
+  }
+
+  <div
+    class="grid grid-cols-[minmax(0,1fr)_minmax(170px,200px)] items-start gap-10 mt-10 max-[820px]:grid-cols-1"
+  >
+    <article class="blog">
+      <Content />
+    </article>
+
+    <aside
+      class="sticky top-11 flex max-h-[calc(100vh-88px)] flex-col gap-4.5 self-start overflow-y-auto overflow-x-hidden max-[820px]:hidden"
+    >
+      <div
+        class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-ink/40 uppercase"
+      >
+        Contents
+      </div>
+      <nav aria-label="Table of contents" class="relative flex flex-col">
+        <span
+          aria-hidden="true"
+          class="absolute inset-y-0 left-0 w-px bg-ink/18"></span>
+        <span
+          aria-hidden="true"
+          data-toc-thumb
+          class="bg-accent absolute top-0 left-0 h-0 w-0.5 transition-[top,height] duration-280 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        ></span>
+        {
+          toc.map((heading) => (
+            <a
+              href={`#${heading.slug}`}
+              data-toc-link={heading.slug}
+              class="block py-2.5 pl-5 text-[13.5px] leading-5 text-ink/55 no-underline transition-[color,transform] duration-180 ease-[ease] hover:translate-x-0.5 hover:text-ink"
+            >
+              {heading.text}
+            </a>
+          ))
+        }
+      </nav>
+    </aside>
+  </div>
+
+  <div
+    class="mt-14 flex max-w-180 items-center justify-between gap-4 border-t border-ink/30 pt-7"
+  >
+    <span
+      class="font-heading text-[11.5px] font-semibold tracking-[0.12em] text-ink/55 uppercase"
+    >
+      Thanks for reading <span aria-hidden="true">❤️</span>
+    </span>
+
+    <span
+      class="font-heading text-[11.5px] font-semibold tracking-[0.12em] text-ink/55 uppercase"
+    >
+      Written by Sourabh Haldar
+    </span>
+  </div>
+</BlogLayout>
+
+<script>
+  const links = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"),
+  );
+  const thumb = document.querySelector<HTMLElement>("[data-toc-thumb]");
+
+  function spy() {
+    if (!links.length) return;
+
+    let active: string | null = null;
+    for (const link of links) {
+      const id = link.getAttribute("data-toc-link");
+      const el = id ? document.getElementById(id) : null;
+      if (el && el.getBoundingClientRect().top <= 140) active = id;
+    }
+    if (!active) active = links[0].getAttribute("data-toc-link");
+    if (
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight - 4
+    ) {
+      active = links[links.length - 1].getAttribute("data-toc-link");
+    }
+
+    for (const link of links) {
+      const on = link.getAttribute("data-toc-link") === active;
+      link.classList.toggle("text-ink", on);
+      link.classList.toggle("text-ink/55", !on);
+      link.classList.toggle("font-medium", on);
+      if (on && thumb) {
+        thumb.style.top = `${link.offsetTop}px`;
+        thumb.style.height = `${link.offsetHeight}px`;
+      }
+    }
+  }
+
+  addEventListener("scroll", spy, { passive: true });
+  addEventListener("resize", spy);
+  spy();
+</script>

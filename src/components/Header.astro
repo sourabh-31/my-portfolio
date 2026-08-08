@@ -1,6 +1,9 @@
 ---
 import { SITE } from "../data/site";
 import logo from "../assets/logo.svg";
+
+const pathname = Astro.url.pathname;
+const isBlogPage = pathname.startsWith("/blog");
 ---
 
 <div
@@ -18,12 +21,10 @@ import logo from "../assets/logo.svg";
     <img src={logo.src} alt="" width="34" height="34" />
   </a>
   <a
-    href={SITE.githubHref}
+    href={isBlogPage ? "/" : "/blog"}
     class="hover:text-accent inline-flex items-center gap-1.25 no-underline"
-    target="_blank"
-    rel="noopener noreferrer"
   >
-    Blog
+    {isBlogPage ? "Portfolio" : "Blog"}
     <svg
       width="13"
       height="13"

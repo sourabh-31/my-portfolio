@@ -1,0 +1,694 @@
+---
+title: Web Font Optimization in 10 Steps
+description: A practical, step-by-step guide to shipping smaller, faster web fonts, from choosing the right format and subsets to preloading, caching, and measuring performance.
+publishDate: 8 Aug 2026
+readingTime: 10
+cover: "../../assets/blog/web-font-optimization.png"
+tags:
+  - Astro
+  - Fonts
+  - Optimization
+---
+
+Web fonts can have a surprisingly large impact on how fast a page feels. A font may only be 10-30 KB, but the browser still has to discover it, connect to its origin, download it, parse it, and use it before the final typography appears. Multiply that by several families and weights, and fonts can become an unnecessary part of the critical rendering path.
+
+The good news is that font optimization doesn't need to be complicated.
+
+You don't need to eliminate every font or obsess over shaving a few hundred bytes from a file. A better approach is to make sure the browser receives **only the fonts it needs, in the format it needs, at the time it needs them**.
+
+Here is a practical 10-step process.
+
+---
+
+## 1. Use WOFF2
+
+For modern websites, start with **WOFF2**.
+
+WOFF2 provides better compression than the older WOFF format and is widely supported by modern browsers. Unless you have a specific compatibility requirement, there is usually little reason to make WOFF your primary web-font format.
+
+A typical setup might look like:
+
+```text
+fonts/
+├── archivo-400.woff2
+├── archivo-700.woff2
+└── geist-mono-400.woff2
+```
+
+Instead of keeping several formats for every weight:
+
+```text
+archivo-400.ttf
+archivo-400.otf
+archivo-400.woff
+archivo-400.woff2
+```
+
+For most modern sites, WOFF2 is the format to prioritize.
+
+The important part is not just the file format, though. A well-compressed font that you don't actually need is still unnecessary bytes.
+
+---
+
+## 2. Ship only the weights and styles you actually use
+
+Font families often come with a large range of weights:
+
+```text
+100  Thin
+200  Extra Light
+300  Light
+400  Regular
+500  Medium
+600  Semi Bold
+700  Bold
+800  Extra Bold
+900  Black
+```
+
+Your design probably doesn't use all of them.
+
+If your site only uses:
+
+```text
+400 Regular
+700 Bold
+```
+
+there is little reason to ship the other weights.
+
+Define only the variants you need:
+
+```css
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+```
+
+This also applies to styles.
+
+If you don't use italic, don't ship an italic font just because the family provides one.
+
+Think of the process as:
+
+```text
+Design requirements
+        ↓
+Required weights/styles
+        ↓
+Required font files
+        ↓
+Browser downloads only what is needed
+```
+
+---
+
+## 3. Choose between static and variable fonts based on actual usage
+
+Variable fonts are useful, but they aren't automatically faster.
+
+A static setup might look like:
+
+```text
+Archivo-400.woff2
+Archivo-500.woff2
+Archivo-700.woff2
+```
+
+A variable font might look like:
+
+```text
+Archivo-Variable.woff2
+```
+
+with:
+
+```css
+font-weight: 100 900;
+```
+
+A variable font can be a great choice when a design uses many weights or needs continuous control over a font axis.
+
+But if a site only needs `400` and `700`, a small set of static, subsetted WOFF2 files can be extremely efficient.
+
+For example:
+
+```css
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+}
+```
+
+The browser still downloads the variable font as a file. It doesn't download only the `400` or `700` portion.
+
+So don't choose variable fonts simply because they are newer.
+
+Compare the actual files:
+
+```text
+Static fonts
+400 → 12 KB
+700 → 13 KB
+Total → 25 KB
+
+Variable font
+100–900 → 48 KB
+```
+
+In this example, the static files are clearly the better choice if only two weights are needed.
+
+The opposite can also be true when many weights are required.
+
+---
+
+## 4. Subset your fonts
+
+A font file can contain thousands of glyphs.
+
+Depending on the font, it may include support for:
+
+```text
+Latin
+Latin Extended
+Greek
+Cyrillic
+Vietnamese
+Symbols
+```
+
+If your site only needs basic Latin characters, shipping every other writing system adds bytes without adding value.
+
+A subsetted font contains only the glyphs you actually need.
+
+Conceptually:
+
+```text
+Full font
+████████████████████████████████
+
+Latin subset
+████████
+```
+
+Common subsets include:
+
+```text
+latin
+latin-ext
+cyrillic
+greek
+vietnamese
+```
+
+Choose based on the content your website actually needs.
+
+Don't remove a subset simply because it isn't needed today if your application is expected to support additional languages later.
+
+For a site that only needs English text, a Latin subset can dramatically reduce the size of each font variant.
+
+---
+
+## 5. Define accurate fallback fonts
+
+A custom font is not guaranteed to be available immediately.
+
+Your fallback stack determines what the browser can use while the custom font is unavailable.
+
+For example:
+
+```css
+:root {
+  --font-sans: "Archivo", system-ui, sans-serif;
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+```
+
+Good fallback stacks allow text to render even before the web font arrives.
+
+For an even better result, choose fallbacks with metrics that are reasonably close to your primary font. Large differences between the fallback and final font can cause visible layout shifts when the custom font replaces it.
+
+Modern CSS also provides:
+
+```css
+size-adjust: 95%;
+ascent-override: 90%;
+descent-override: 22%;
+line-gap-override: 0%;
+```
+
+These properties can be used to tune fallback metrics and reduce layout shifts.
+
+This is an advanced optimization, so don't reach for it before fixing unnecessary font downloads and loading priorities.
+
+---
+
+## 6. Choose `font-display` deliberately
+
+`font-display` controls how the browser behaves while waiting for a web font.
+
+Common values include:
+
+```css
+font-display: auto;
+font-display: block;
+font-display: swap;
+font-display: fallback;
+font-display: optional;
+```
+
+For many websites, `swap` is a practical starting point:
+
+```css
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+With `swap`, the browser can render text using the fallback font and replace it when the web font becomes available.
+
+This avoids leaving important text invisible while the font downloads.
+
+However, `swap` isn't automatically the best choice for every font.
+
+For a font that isn't critical to the initial experience, `optional` can sometimes be more appropriate:
+
+```css
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+```
+
+The right choice depends on whether the font is essential to the visual identity of the page or merely an enhancement.
+
+---
+
+## 7. Preload only critical fonts
+
+Preloading tells the browser to fetch a resource earlier than it might otherwise discover it.
+
+For a critical font, a preload hint can look like:
+
+```html
+<link
+  rel="preload"
+  href="/fonts/archivo-400.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+```
+
+This can be useful when the font is required to render important above-the-fold content.
+
+But preloading everything is a common mistake.
+
+If you have:
+
+```text
+Archivo 400
+Archivo 700
+Space Grotesk 400
+Space Grotesk 500
+Space Grotesk 700
+Geist Mono 400
+Geist Mono 700
+```
+
+and preload all seven, you have effectively told the browser that all seven are critical.
+
+They can compete with HTML, CSS, images, and other important resources.
+
+A better strategy is:
+
+```text
+Above-the-fold content
+        ↓
+Identify required font variants
+        ↓
+Preload only those variants
+        ↓
+Let the browser discover the rest normally
+```
+
+In Astro, use the framework's font tooling or explicit preload hints to preload only the variants required for the initial viewport.
+
+The important principle is simple:
+
+> Preload critical fonts, not every font you have.
+
+---
+
+## 8. Self-host fonts and configure caching
+
+Self-hosting gives you control over how fonts are delivered.
+
+Instead of:
+
+```text
+Browser
+   ↓
+Your site
+   ↓
+Third-party font provider
+   ↓
+Font
+```
+
+you can serve the font from your own origin or CDN:
+
+```text
+Browser
+   ↓
+Your CDN
+   ↓
+Font
+```
+
+This gives you control over:
+
+- font files
+- subsets
+- cache headers
+- preload behavior
+- deployment
+- CDN configuration
+
+Caching is especially important for static fonts.
+
+If your build system generates hashed asset names such as:
+
+```text
+/_astro/fonts/4ed3bdac103d467c.woff2
+```
+
+the filename changes when the content changes.
+
+That makes long-lived caching a good fit:
+
+```http
+Cache-Control: public, max-age=31536000, immutable
+```
+
+With immutable, hashed assets, a returning visitor can reuse the local font without revalidating it on every visit.
+
+This is much better than repeatedly making a network request only to receive:
+
+```http
+304 Not Modified
+```
+
+A `304` means the browser can use its cached copy, but it still required a network round trip.
+
+---
+
+## 9. Make sure fonts aren't blocking more important resources
+
+Font performance is not isolated from the rest of the page.
+
+The browser has a limited amount of bandwidth and connection capacity. If you aggressively preload several fonts, those requests can compete with other resources.
+
+Think about the critical path:
+
+```text
+DNS
+ ↓
+Connection
+ ↓
+TLS
+ ↓
+HTML
+ ↓
+CSS
+ ↓
+Critical fonts
+ ↓
+Layout
+ ↓
+Paint
+```
+
+Now compare that with an overloaded page:
+
+```text
+HTML
+ ↓
+CSS
+ ↓
+7 fonts
+ ↓
+Hero image
+ ↓
+JavaScript
+ ↓
+Analytics
+ ↓
+Other assets
+```
+
+The second approach may contain perfectly optimized individual files and still feel slow.
+
+Resource priority matters.
+
+This is why font optimization should be treated as part of overall performance optimization rather than as a standalone task.
+
+When inspecting a font request in DevTools, pay attention to:
+
+```text
+Priority
+Initiator
+Transferred
+Size
+Waiting
+Downloading
+Cache status
+```
+
+A tiny font spending most of its time in `Waiting` is telling you something very different from a large font spending most of its time downloading.
+
+---
+
+## 10. Measure the result
+
+The final step is the one that prevents all the others from becoming guesswork.
+
+Open your browser's Network panel and look at:
+
+- transferred size
+- request priority
+- timing
+- cache status
+- initiator
+- whether the font was loaded at all
+- whether it was served from the browser cache
+
+You can also measure server response time from the command line:
+
+```bash
+curl -s -o /dev/null \
+  -w 'TTFB: %{time_starttransfer}s | Total: %{time_total}s\n' \
+  https://example.com
+```
+
+For multiple measurements:
+
+```bash
+for i in {1..10}; do
+  curl -s -o /dev/null \
+    -w 'TTFB: %{time_starttransfer}s | Total: %{time_total}s\n' \
+    https://example.com
+done
+```
+
+For a more complete breakdown:
+
+```bash
+curl -s -o /dev/null \
+  -w '\
+IP:      %{remote_ip}\n\
+Connect: %{time_connect}s\n\
+TLS:     %{time_appconnect}s\n\
+TTFB:    %{time_starttransfer}s\n\
+Total:   %{time_total}s\n' \
+  https://example.com
+```
+
+Don't judge performance from a single request.
+
+Network conditions vary, and a single unusually fast or slow request doesn't tell you much.
+
+Also test both:
+
+```text
+Cold load
+    ↓
+No browser cache
+
+Warm load
+    ↓
+Browser cache already populated
+```
+
+A site can have an excellent repeat-visit experience while still having a slow first load.
+
+---
+
+# A practical font optimization checklist
+
+If you want a simple process to follow, use this order:
+
+```text
+1. Choose WOFF2
+       ↓
+2. Remove unused weights/styles
+       ↓
+3. Choose static vs variable based on usage
+       ↓
+4. Subset required glyphs
+       ↓
+5. Define a good fallback stack
+       ↓
+6. Choose font-display
+       ↓
+7. Preload only critical variants
+       ↓
+8. Self-host and configure caching
+       ↓
+9. Check resource priority
+       ↓
+10. Measure the result
+```
+
+This order is useful because it starts with reducing unnecessary work before trying to make the remaining work happen faster.
+
+---
+
+# Example: a small, intentional font setup
+
+A simple production setup might contain:
+
+```text
+src/
+└── assets/
+    └── fonts/
+        ├── archivo-400.woff2
+        ├── archivo-700.woff2
+        ├── space-grotesk-400.woff2
+        ├── space-grotesk-700.woff2
+        └── geist-mono-400.woff2
+```
+
+Then define only those variants:
+
+```css
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/space-grotesk-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/space-grotesk-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+And expose them through a consistent font stack:
+
+```css
+:root {
+  --font-sans: "Archivo", system-ui, sans-serif;
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+```
+
+The result isn't complicated. It is simply intentional.
+
+---
+
+# The main idea
+
+Font optimization is mostly about **doing less work and doing the remaining work at the right time**.
+
+A fast setup generally follows this pattern:
+
+```text
+Fewer bytes
+    +
+Fewer unnecessary variants
+    +
+Smaller subsets
+    +
+Good fallbacks
+    +
+Correct loading priority
+    +
+Long-lived caching
+    +
+Fast delivery
+    +
+Measurement
+    =
+Fast typography
+```
+
+You don't need a complicated setup.
+
+You need to know exactly which fonts your design requires and make the browser's path to those fonts as short as possible.
+
+And once your font files are already small, don't keep compressing them just for the sake of it. Look at the network waterfall. If most of the time is spent waiting for the connection or server, that's where the next performance improvement is likely to be.
+
+**Don't optimize what looks expensive. Measure what is expensive.**

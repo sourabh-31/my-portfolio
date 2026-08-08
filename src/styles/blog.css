@@ -1,0 +1,131 @@
+@reference "./globals.css";
+
+@layer components {
+  .blog {
+    @apply max-w-180 text-[17px] leading-[30px] text-ink/88;
+  }
+
+  .blog > p:first-of-type::first-letter {
+    @apply float-left text-[3.6rem] leading-[0.8] font-semibold text-[#ff3b1f] mr-[0.15em] mt-[0.16em] font-heading;
+  }
+
+  .blog h1 {
+    @apply font-heading mt-13 mb-4.5 text-[32px] leading-[1.15] font-bold tracking-[-0.02em] text-ink;
+  }
+
+  .blog h2 {
+    @apply font-heading mt-13 mb-4.5 text-[27px] leading-[1.22] font-bold tracking-[-0.018em] text-ink;
+    scroll-margin-top: 40px;
+  }
+
+  .blog h3 {
+    @apply font-heading mt-11 mb-3.5 text-[22px] leading-[1.25] font-bold tracking-[-0.015em] text-ink;
+    scroll-margin-top: 40px;
+  }
+
+  .blog h4 {
+    @apply font-heading mt-9 mb-3 text-[19px] leading-[1.3] font-bold text-ink;
+  }
+
+  .blog p {
+    @apply mb-6.5;
+  }
+
+  .blog a {
+    @apply text-ink underline decoration-ink/35 underline-offset-4 transition-colors duration-160 hover:text-accent hover:decoration-accent;
+  }
+
+  .blog ul {
+    @apply mb-6.5 space-y-3 pl-0;
+    list-style: none;
+  }
+
+  .blog ul li {
+    @apply relative pl-10 leading-[1.6];
+  }
+
+  .blog ul li::before {
+    content: "";
+    @apply absolute left-0 top-[0.5em] h-2 w-2 bg-accent;
+  }
+
+  .blog ol {
+    @apply font-heading mb-6.5 list-decimal space-y-3 pl-6 marker:font-semibold marker:text-accent;
+  }
+
+  .blog ol li {
+    @apply leading-[1.6];
+  }
+
+  .blog blockquote {
+    @apply font-heading my-10 border-l-[3px] border-accent py-1.5 pl-8 text-[22px] leading-[1.42] font-medium tracking-[-0.012em] text-ink;
+  }
+
+  .blog blockquote p {
+    @apply m-0;
+  }
+
+  .blog hr {
+    @apply my-12 border-ink/15;
+  }
+
+  .blog img {
+    @apply my-10 w-full;
+  }
+
+  .blog figure {
+    @apply my-10;
+  }
+
+  .blog figcaption {
+    @apply mt-3 text-center text-sm text-ink/60;
+  }
+
+  .blog table {
+    @apply my-10 w-full border-collapse text-[15px];
+  }
+
+  .blog th {
+    @apply font-heading border border-ink/20 px-4 py-3 text-left text-[13px] font-semibold tracking-[0.06em] text-ink/70 uppercase;
+  }
+
+  .blog td {
+    @apply border border-ink/20 px-4 py-3 text-ink/85;
+  }
+
+  .blog code:not(pre code) {
+    @apply bg-panel px-1.5 py-0.5 font-mono text-[0.85em] text-[#eceae8];
+  }
+
+  .blog pre {
+    @apply border-ink bg-panel my-9.5 overflow-x-auto border-2 p-4.5;
+  }
+
+  .blog pre code {
+    @apply bg-transparent p-0 font-mono text-[13px] leading-[24px] text-[#eceae8];
+  }
+
+  .blog strong {
+    @apply font-bold text-ink font-heading;
+  }
+
+  .blog em {
+    @apply italic;
+  }
+
+  .blog del {
+    @apply text-ink/60 line-through;
+  }
+
+  .blog kbd {
+    @apply border-ink/30 bg-panel px-2 py-1 font-mono text-[13px] text-[#eceae8];
+  }
+
+  .blog details {
+    @apply my-6 border border-ink/20 p-4;
+  }
+
+  .blog summary {
+    @apply font-heading cursor-pointer font-semibold;
+  }
+}

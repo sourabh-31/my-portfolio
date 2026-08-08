@@ -29,6 +29,18 @@ export const PROJECTS = [
   },
 ];
 
+export const BLOG_POSTS = [
+  {
+    slug: "web-font-optimization",
+    title: "Web Font Optimization in 10 Steps",
+    date: "8 Aug 2026",
+    read: "10 min",
+    tags: ["Astro", "Fonts", "Optimization"],
+    excerpt:
+      "A practical, step-by-step guide to shipping smaller, faster web fonts, from choosing the right format and subsets to preloading, caching, and measuring performance.",
+  },
+];
+
 export const JOBS = [
   {
     dates: "2026 – Present",

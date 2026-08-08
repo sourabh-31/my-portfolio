@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+import { BLOG_POSTS } from "../data/site";
+import featuredImg from "../assets/blog/web-font-optimization.png";
+
+const [featured] = BLOG_POSTS;
+---
+
+<header class="flex flex-col gap-4.5 pb-11">
+  <h1
+    class="font-heading m-0 ml-[-0.04em] max-w-[16ch] text-[clamp(38px,6vw,58px)] leading-[1.04] font-bold tracking-tight"
+  >
+    Welcome to the blog
+  </h1>
+  <p
+    class="m-0 max-w-[60ch] text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_74%,transparent)]"
+  >
+    This is where I write about the things I'm learning, building, and
+    exploring. Some articles are technical, others are practical, but they're
+    all written with the hope that someone else finds them useful.
+  </p>
+</header>
+
+<div class="flex items-center gap-3.5 pb-5">
+  <span aria-hidden="true" class="bg-accent h-2 w-2 shrink-0"></span>
+  <span
+    class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-[color-mix(in_srgb,var(--color-ink)_45%,transparent)] uppercase"
+  >
+    Latest
+  </span>
+  <span
+    class="h-px flex-1 bg-[color-mix(in_srgb,var(--color-ink)_28%,transparent)]"
+  ></span>
+</div>
+
+<a
+  href={`/blog/${featured.slug}`}
+  class="group grid grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)] items-start gap-7 pb-11 no-underline max-[860px]:grid-cols-1 max-[860px]:gap-5.5"
+>
+  <Image
+    src={featuredImg}
+    alt="featured"
+    loading="eager"
+    decoding="async"
+    quality="mid"
+    class="rounded-lg"
+  />
+  <div class="flex min-w-0 flex-col">
+    <span
+      class="font-heading text-[clamp(27px,3.3vw,37px)] leading-[1.1] font-bold tracking-[-0.024em] group-hover:text-accent"
+    >
+      {featured.title}
+    </span>
+    <span
+      class="mt-4 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]"
+    >
+      {featured.excerpt}
+    </span>
+    <span
+      class="font-heading mt-5.5 flex items-center gap-3 text-[11px] font-semibold tracking-[0.14em] text-ink/45 uppercase"
+    >
+      <span>{featured.date}</span>
+      <span aria-hidden="true" class="h-1 w-1 bg-current"></span>
+      <span>{featured.tags.join(" · ")}</span>
+      <span aria-hidden="true" class="h-1 w-1 bg-current"></span>
+      <span>{featured.read} read</span>
+    </span>
+    <span
+      class="font-heading mt-6.5 inline-flex items-center gap-2.5 self-start border-b-2 border-ink/35 pb-1.25 text-[11.5px] font-bold tracking-[0.12em] uppercase group-hover:text-accent"
+    >
+      Read the piece
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 12h14M13 6l6 6-6 6"></path>
+      </svg>
+    </span>
+  </div>
+</a>
