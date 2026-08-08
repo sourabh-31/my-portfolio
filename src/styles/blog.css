@@ -1,5 +1,7 @@
 @reference "./globals.css";
 
+@layer theme, base, components, utilities;
+
 @layer components {
   .blog {
     @apply max-w-180 text-[17px] leading-[30px] text-ink/88;
