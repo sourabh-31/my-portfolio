@@ -32,7 +32,7 @@ export const PROJECTS = [
 export const BLOG_POSTS = [
   {
     slug: "web-font-optimization",
-    title: "Web Font Optimization in 10 Steps",
+    title: "A Practical Guide to Web Font Optimization",
     date: "8 Aug 2026",
     read: "10 min",
     tags: ["Astro", "Fonts", "Optimization"],
