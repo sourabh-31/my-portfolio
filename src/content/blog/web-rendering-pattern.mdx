@@ -1,0 +1,212 @@
+---
+title: "Understanding Web Rendering: CSR, SSR, SSG and More"
+description: A beginner friendly walkthrough of every major web rendering method, from client side and server side rendering to static generation, incremental regeneration, and hybrid rendering, with framework support compared side by side.
+publishDate: 15 Aug 2026
+readingTime: 8
+cover: "../../assets/blog/web-rendering-pattern.png"
+tags:
+  - Web Development
+  - Frontend Architecture
+---
+
+Imagine you walk into a restaurant. You order a meal, but what happens next can be very different depending on how that restaurant operates. They might bring the ingredients to your table and cook everything right in front of you. They might prepare the meal in the kitchen after you order and bring it out once it's ready. Or they might have the meal prepared beforehand, so it's ready the moment you arrive.
+
+Websites work the same way. When your browser asks for a webpage, that page has to get **"cooked"** somewhere, either on a server, on your device, ahead of time, or somewhere in between. This is what `rendering` actually means: turning code and data into the HTML page you see on screen.
+
+Choosing how and where that cooking happens is one of the most important decisions in modern web development. Let's walk through every method, in the simplest way possible.
+
+## What Does `Rendering` Actually Mean?
+
+Every website you visit is ultimately just HTML, CSS, and JavaScript being shown in your browser. But that HTML has to be generated somewhere. It could be:
+
+- Built by the browser, using JavaScript, after the page loads
+- Built by a server, every single time someone requests the page
+- Built once, ahead of time, and simply handed to everyone who visits
+
+Each of these approaches is a rendering method, and each one comes with real tradeoffs in speed, SEO, cost, and complexity. Let's go through them one by one.
+
+## 1. Client Side Rendering (CSR)
+
+### How it works
+
+The server sends a nearly empty HTML file along with a big JavaScript bundle. Your browser downloads that JavaScript, runs it, and only then builds the actual page content, right there on your device.
+
+Think of it like a chef bringing all the ingredients and cooking equipment to your table, then preparing the meal right in front of you. First, everything has to be brought to the table, and then the meal has to be cooked before you can eat.
+
+### Request flow
+
+```text
+Browser
+   ↓ GET /products/123
+Server
+   ↓ HTML shell + JavaScript
+Browser
+   ↓ downloads JavaScript
+   ↓ fetches product data
+   ↓ renders the page
+```
+
+The browser does most of the rendering work after the initial response arrives.
+
+## 2. Server Side Rendering (SSR)
+
+### How it works
+
+Every time someone requests a page, the server builds the full HTML for that specific request, right then and there, and sends it to the browser already complete.
+
+Now imagine ordering the same meal, but the chef takes your order to the kitchen, prepares everything there, and brings the finished meal to your table. The meal takes some time to prepare, but when it reaches your table, it's already ready to eat.
+
+### Request flow
+
+```text
+Browser
+   ↓ GET /products/123
+Server
+   ↓ fetches product data
+   ↓ generates HTML
+Browser
+   ↓ receives rendered HTML
+   ↓ displays content
+   ↓ hydrates interactive parts
+```
+
+The server does the initial rendering work, so the browser can receive useful HTML before the application's JavaScript has finished executing.
+
+## 3. Static Site Generation (SSG)
+
+### How it works
+
+The entire page is built once, ahead of time, during the build process. The finished HTML files are then simply handed out to every visitor, usually from a fast CDN.
+
+This is like a restaurant with a buffet already prepared. No cooking happens when you order, you just get your plate immediately.
+
+### Request flow
+
+```text
+Build time
+   ↓
+Generate HTML
+   ↓
+Deploy static files to a CDN
+
+Visitor
+   ↓ GET /products/123
+CDN
+   ↓
+Returns existing HTML
+```
+
+The expensive rendering work happens before visitors arrive, which is why static pages can be extremely fast to serve.
+
+## 4. Incremental Static Regeneration (ISR)
+
+### How it works
+
+ISR takes the best idea from SSG (pre-built, fast pages) and fixes its biggest weakness (stale content). With ISR, a previously generated page can be regenerated after a specified period or when the application explicitly revalidates it, without rebuilding the entire site.
+
+The important idea is that regeneration can happen incrementally. So if you have 10,000 product pages and one product's price changes, the application can regenerate that product page without rebuilding all 10,000 pages.
+
+In our restaurant analogy, this is like a buffet where the trays are periodically replaced with fresh meals, without closing the restaurant or preparing the entire buffet from scratch.
+
+### A concrete example
+
+Imagine a store with 10,000 product pages.
+
+- At build time, all 10,000 pages are generated.
+- A product's price changes later.
+- The application marks that product's page as needing fresh data.
+- That page can be regenerated without rebuilding every other product page.
+
+The exact regeneration and caching behavior depends on the framework and deployment platform, but the goal is the same: keep the speed of pre-rendered pages while allowing them to become fresh over time.
+
+## 5. Hybrid Rendering
+
+Here is the secret that experienced developers eventually learn: real world applications almost never use just one rendering method. They mix and match, page by page, or even component by component, depending on what each part of the app actually needs.
+
+This is hybrid rendering, and it is genuinely where modern web development shines.
+
+### How it works in practice
+
+- Your marketing homepage: rendered with SSG, since it rarely changes
+- Your product pages: rendered with ISR, since prices and stock update occasionally
+- Your user dashboard: rendered with SSR or CSR, since it is personalized and behind a login
+- Small interactive widgets sprinkled across static pages: hydrated individually with JavaScript, while the rest of the page stays static
+
+### What is hydration?
+
+Hydration is the process of taking HTML that has already been rendered and attaching JavaScript behavior to it in the browser.
+
+For example, a server might send you a fully rendered button:
+
+```html
+<button>Buy now</button>
+```
+
+The browser can display that HTML immediately. During hydration, JavaScript connects the button to the application's logic so that clicking it actually does something.
+
+This is why a page can be visible before all of its JavaScript has finished executing.
+
+### Other rendering techniques worth knowing
+
+Not every technique below is a separate rendering strategy like CSR, SSR, or SSG. Some describe how rendered content is delivered or hydrated, while others are framework-specific architectural patterns.
+
+**Partial Prerendering (PPR)**
+
+A framework-specific approach, notably associated with Next.js, that combines prerendered and dynamic parts of a page. Static parts can be prepared ahead of time, while dynamic content can be generated or streamed when the request happens.
+
+**Streaming SSR**
+
+Sends server-rendered HTML to the browser in chunks as different parts become ready, instead of waiting for the entire page to finish rendering. The user can start seeing useful content sooner while slower parts continue streaming.
+
+**Edge Rendering**
+
+Runs server-side rendering closer to the user through geographically distributed edge infrastructure. This can reduce network latency for requests that still require server-side work.
+
+**Islands Architecture**
+
+Ships mostly static HTML by default and hydrates only the small interactive sections, called `islands`, with JavaScript. This can reduce the amount of JavaScript the browser needs to execute.
+
+**Resumability**
+
+An architectural approach where the application can preserve enough information in the server-rendered output to resume its behavior in the browser, reducing the need to re-execute large amounts of application code during startup.
+
+## Framework Support at a Glance
+
+Here is the part that trips up most beginners: frameworks are not locked into just one rendering method. Modern meta-frameworks often let you choose how different routes or parts of an application are rendered.
+
+One important caveat: **CSR, SSR, and SSG are rendering strategies, while "hybrid" is more of an architectural description.** Also, ISR is implemented differently across frameworks and hosting platforms. So instead of treating the table below as a strict feature checklist, use it as a high-level mental model.
+
+| Framework                | CSR                     | SSR                              | SSG                    | ISR                              | Hybrid architectures    |
+| ------------------------ | ----------------------- | -------------------------------- | ---------------------- | -------------------------------- | ----------------------- |
+| React + Vite             | ✅                      | Via additional tooling           | Via additional tooling | Via additional tooling           | Depends on architecture |
+| Next.js                  | ✅                      | ✅                               | ✅                     | ✅                               | ✅                      |
+| Nuxt                     | ✅                      | ✅                               | ✅                     | ✅                               | ✅                      |
+| Vue + Vite               | ✅                      | Via additional tooling           | Via additional tooling | Via additional tooling           | Depends on architecture |
+| Angular                  | ✅                      | ✅                               | ✅                     | Framework/deployment dependent   | ✅                      |
+| SvelteKit                | ✅                      | ✅                               | ✅                     | Adapter/framework dependent      | ✅                      |
+| Remix / React Router     | ✅                      | ✅                               | ✅                     | Revalidation-focused             | ✅                      |
+| Astro                    | ✅                      | ✅                               | ✅                     | Deployment/integration dependent | ✅                      |
+| Gatsby                   | ✅                      | Limited / architecture dependent | ✅                     | Framework-specific               | ✅                      |
+| Eleventy / Hugo / Jekyll | Browser JS can be added | ❌ by default                    | ✅                     | ❌ by default                    | Depends on architecture |
+| Qwik / Qwik City         | ✅                      | ✅                               | ✅                     | Framework/deployment dependent   | ✅                      |
+| SolidStart               | ✅                      | ✅                               | ✅                     | Framework/deployment dependent   | ✅                      |
+
+The exact capabilities can change with framework versions, adapters, and deployment platforms. The important lesson is not to memorize checkmarks: **choose a framework based on the rendering and data-fetching model your application needs.**
+
+## Choosing the Right Rendering Method: A Simple Decision Guide
+
+| Your content is...                                                    | Choose           |
+| --------------------------------------------------------------------- | ---------------- |
+| Rarely changing (blog, docs, marketing page)                          | SSG              |
+| Large in volume but updates occasionally (product catalog, job board) | ISR              |
+| Personalized or changes per request (dashboard, live pricing)         | SSR              |
+| Highly interactive, SEO does not matter, often behind login           | CSR              |
+| A mix of everything above, on different pages                         | Hybrid Rendering |
+
+A simple way to think about it: ask yourself two questions for every page. Does this need to be indexed by search engines? And does this content change per user or per visit? Your answers will point you toward the right method almost every time.
+
+## Final Thoughts
+
+There is no single **"best"** rendering method. The developers who build genuinely fast, scalable, and user friendly websites are not the ones who pick one technique and use it everywhere. They are the ones who understand every option deeply enough to choose the right tool for each specific job.
+
+Next time you start a project, do not just ask **"should I use Next.js or plain React."** Ask instead: **"for this exact page, what does the user need, and what does the search engine need, and how often does this content actually change."** The answer to that question will tell you exactly which rendering method to reach for.

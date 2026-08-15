@@ -1,9 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { BLOG_POSTS } from "../data/site";
-import featuredImg from "../assets/blog/web-font-optimization.png";
 
-const [featured] = BLOG_POSTS;
+const [featured, ...rest] = BLOG_POSTS;
 ---
 
 <header class="flex flex-col gap-4.5 pb-11">
@@ -24,13 +23,11 @@ const [featured] = BLOG_POSTS;
 <div class="flex items-center gap-3.5 pb-5">
   <span aria-hidden="true" class="bg-accent h-2 w-2 shrink-0"></span>
   <span
-    class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-[color-mix(in_srgb,var(--color-ink)_45%,transparent)] uppercase"
+    class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-ink/45 uppercase"
   >
     Latest
   </span>
-  <span
-    class="h-px flex-1 bg-[color-mix(in_srgb,var(--color-ink)_28%,transparent)]"
-  ></span>
+  <span class="h-px flex-1 bg-ink/28"></span>
 </div>
 
 <a
@@ -38,7 +35,7 @@ const [featured] = BLOG_POSTS;
   class="group grid grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)] items-start gap-7 pb-11 no-underline max-[860px]:grid-cols-1 max-[860px]:gap-5.5"
 >
   <Image
-    src={featuredImg}
+    src={featured.img}
     alt="featured"
     loading="eager"
     decoding="async"
@@ -51,9 +48,7 @@ const [featured] = BLOG_POSTS;
     >
       {featured.title}
     </span>
-    <span
-      class="mt-4 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]"
-    >
+    <span class="mt-4 text-ink/65">
       {featured.excerpt}
     </span>
     <span
@@ -84,3 +79,54 @@ const [featured] = BLOG_POSTS;
     </span>
   </div>
 </a>
+
+<div class="flex items-center gap-3.5 pt-2 pb-1.5">
+  <span aria-hidden="true" class="h-2 w-2 shrink-0 bg-ink/25"></span>
+  <span
+    class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-ink/45 uppercase"
+  >
+    Earlier
+  </span>
+  <span class="h-px flex-1 bg-ink/20"></span>
+</div>
+
+{
+  rest.map((post) => (
+    <a
+      href={`/blog/${post.slug}`}
+      class="group grid grid-cols-[190px_minmax(0,1fr)_26px] items-stretch gap-6.5 py-6.5 no-underline max-[640px]:grid-cols-1 max-[640px]:gap-3"
+    >
+      <Image
+        src={post.img}
+        alt={post.title}
+        loading="eager"
+        decoding="async"
+        quality="mid"
+        class="rounded-lg"
+      />
+      <div class="flex min-w-0 flex-col gap-2.25">
+        <span class="font-heading text-[21px] leading-[1.26] font-bold tracking-[-0.015em] group-hover:text-accent">
+          {post.title}
+        </span>
+        <span class=" text-[15px] leading-6.25 text-ink/65">
+          {post.excerpt}
+        </span>
+        <span class="font-heading flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[10.5px] font-semibold tracking-[0.1em] text-ink/45 uppercase">
+          <span>{post.date}</span>
+          <span aria-hidden="true" class="h-1 w-1 bg-current" />
+          <span>{post.tags.join(" · ")}</span>
+          <span aria-hidden="true" class="h-1 w-1 bg-current" />
+          <span>{post.read} read</span>
+        </span>
+      </div>
+    </a>
+  ))
+}
+
+<div
+  class="font-heading flex items-center gap-3.5 pt-11.5 text-[11.5px] font-semibold tracking-[0.1em] text-ink/45 uppercase"
+>
+  <span class="h-px flex-1 bg-ink/20"></span>
+  End of archive
+  <span class="h-px flex-1 bg-ink/20"></span>
+</div>

@@ -1,5 +1,7 @@
 import pinseiImg from "../assets/pinsei.png";
 import forgeImg from "../assets/forge.png";
+import webRenderingPatternImg from "../assets/blog/web-rendering-pattern.png";
+import webFontOptimizationImg from "../assets/blog/web-font-optimization.png";
 
 export const SITE = {
   email: "sourabhhaldarh@gmail.com",
@@ -31,6 +33,16 @@ export const PROJECTS = [
 
 export const BLOG_POSTS = [
   {
+    slug: "web-rendering-pattern",
+    title: "Understanding Web Rendering: CSR, SSR, SSG and More",
+    date: "15 Aug 2026",
+    read: "8 min",
+    tags: ["Web Development", "Frontend Architecture"],
+    excerpt:
+      "A beginner friendly walkthrough of every major web rendering method, from client side and server side rendering to static generation, incremental regeneration, and hybrid rendering, with framework support compared side by side.",
+    img: webRenderingPatternImg,
+  },
+  {
     slug: "web-font-optimization",
     title: "A Practical Guide to Web Font Optimization",
     date: "8 Aug 2026",
@@ -38,6 +50,7 @@ export const BLOG_POSTS = [
     tags: ["Astro", "Fonts", "Optimization"],
     excerpt:
       "A practical, step-by-step guide to shipping smaller, faster web fonts, from choosing the right format and subsets to preloading, caching, and measuring performance.",
+    img: webFontOptimizationImg,
   },
 ];
 

@@ -43,7 +43,7 @@
   }
 
   .blog ul li {
-    @apply relative pl-10 leading-[1.6];
+    @apply relative pl-8 leading-[1.6];
   }
 
   .blog ul li::before {
