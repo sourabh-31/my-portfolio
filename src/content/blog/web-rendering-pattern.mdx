@@ -9,7 +9,7 @@ tags:
   - Frontend Architecture
 ---
 
-Imagine you walk into a restaurant. You order a meal, but what happens next can be very different depending on how that restaurant operates. They might bring the ingredients to your table and cook everything right in front of you. They might prepare the meal in the kitchen after you order and bring it out once it's ready. Or they might have the meal prepared beforehand, so it's ready the moment you arrive.
+Imagine you walk into a restaurant. You order a meal, but what happens next can be very different depending on how that restaurant operates. They might bring the raw ingredients to your table and let you cook everything yourself. They might prepare the meal in the kitchen after you order and bring it out once it's ready. Or they might have the meal prepared beforehand, so it's ready the moment you arrive.
 
 Websites work the same way. When your browser asks for a webpage, that page has to get **"cooked"** somewhere, either on a server, on your device, ahead of time, or somewhere in between. This is what `rendering` actually means: turning code and data into the HTML page you see on screen.
 
@@ -31,7 +31,7 @@ Each of these approaches is a rendering method, and each one comes with real tra
 
 The server sends a nearly empty HTML file along with a big JavaScript bundle. Your browser downloads that JavaScript, runs it, and only then builds the actual page content, right there on your device.
 
-Think of it like a chef bringing all the ingredients and cooking equipment to your table, then preparing the meal right in front of you. First, everything has to be brought to the table, and then the meal has to be cooked before you can eat.
+Think of it like a table with a grill built into it. They bring you raw ingredients, hand you the tongs, and leave. Nothing is edible when it arrives, and you sit there watching the grill heat up while everyone else is already eating. But once it's hot, a second plate takes no time at all.
 
 ### Request flow
 
