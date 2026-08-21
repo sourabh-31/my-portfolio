@@ -20,7 +20,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
   <div class="mt-2 grid sm:grid-cols-3 gap-3.5 grid-cols-1">
     <a
       href={`mailto:${SITE.email}`}
-      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
+      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
     >
       <svg
         width="17"
@@ -42,7 +42,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
       href={SITE.resumeHref}
       target="_blank"
       rel="noopener noreferrer"
-      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
+      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
     >
       Resume / CV
       <span class="sr-only">(opens in new tab)</span>
@@ -63,7 +63,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     </a>
     <a
       href="#projects"
-      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
+      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
     >
       View projects
     </a>
@@ -282,7 +282,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             <div class="flex gap-2.25 pt-2">
               <a
                 href={project.codeHref}
-                class="border-ink relative inline-flex items-center rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
+                class="border-ink relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -291,7 +291,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
               </a>
               <a
                 href={project.visitHref}
-                class="bg-ink text-paper border-ink relative inline-flex items-center rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
+                class="bg-ink text-paper border-ink relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -346,7 +346,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     </h2>
     <a
       href="/blog"
-      class="border-ink relative inline-flex items-center gap-2 rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold tracking-[0.09em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)] font-heading"
+      class="border-ink relative inline-flex items-center gap-2 rounded-md border-2 px-3 py-1.75 text-[11px] font-bold tracking-[0.09em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)] font-heading"
     >
       All posts
     </a>
