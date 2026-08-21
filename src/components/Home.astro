@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { SITE, PROJECTS, JOBS } from "../data/site";
+import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 ---
 
 <!-- Hero -->
@@ -20,7 +20,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
   <div class="mt-2 grid sm:grid-cols-3 gap-3.5 grid-cols-1">
     <a
       href={`mailto:${SITE.email}`}
-      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
+      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
     >
       <svg
         width="17"
@@ -31,6 +31,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        aria-hidden="true"
       >
         <rect width="20" height="16" x="2" y="4" rx="0"></rect>
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -41,9 +42,10 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
       href={SITE.resumeHref}
       target="_blank"
       rel="noopener noreferrer"
-      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
+      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
     >
       Resume / CV
+      <span class="sr-only">(opens in new tab)</span>
       <svg
         width="17"
         height="17"
@@ -53,6 +55,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        aria-hidden="true"
       >
         <path d="M7 7h10v10"></path>
         <path d="M7 17 17 7"></path>
@@ -60,7 +63,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
     </a>
     <a
       href="#projects"
-      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
+      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 rounded-[10px] border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
     >
       View projects
     </a>
@@ -114,7 +117,9 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
     What I work with
   </h2>
 
-  <div class="border-ink bg-panel border-2 shadow-[7px_7px_0_var(--color-ink)]">
+  <div
+    class="border-ink bg-panel overflow-hidden rounded-[14px] border-2 shadow-[7px_7px_0_var(--color-ink)]"
+  >
     <div
       class="flex items-center justify-between border-b border-[rgba(243,242,242,0.15)] px-4 py-2.5"
     >
@@ -246,68 +251,54 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Things I've built
   </h2>
-  <div class="flex flex-col gap-14">
+  <div class="flex flex-col">
     {
       PROJECTS.map((project) => (
-        <article class="flex flex-col gap-4">
-          <div class="group relative before:absolute before:-inset-0.75 before:content-['']">
-            <figure class="border-ink m-0 overflow-hidden border-2 transition-[translate,box-shadow] duration-120 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 group-hover:shadow-[7px_7px_0_var(--color-ink)]">
-              <div class="font-heading flex aspect-video w-full items-center justify-center bg-[color-mix(in_srgb,var(--color-ink)_6%,var(--color-paper))] text-[12px] tracking-[0.04em] text-[color-mix(in_srgb,var(--color-ink)_45%,transparent)] uppercase">
-                <Image
-                  src={project.imgSrc}
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                  quality="mid"
-                />
-              </div>
-            </figure>
-          </div>
-          <div class="flex flex-wrap items-baseline justify-between gap-4">
-            <h3 class="font-heading m-0 text-[20px] font-bold">
+        <article class="group border-ink/15 grid grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] items-center gap-7.5 border-t-2 py-9.5 max-[640px]:grid-cols-1 max-[640px]:gap-5.5">
+          <figure class="border-ink m-0 overflow-hidden rounded-[14px] border-2 transition-[translate,box-shadow] duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 group-hover:shadow-[7px_7px_0_var(--color-ink)]">
+            <Image
+              src={project.imgSrc}
+              alt={project.title}
+              loading="lazy"
+              decoding="async"
+              quality="mid"
+              class="aspect-4/3 w-full object-cover"
+            />
+          </figure>
+          <div class="flex min-w-0 flex-col gap-3">
+            <h3 class="font-heading text-ink m-0 text-[26px] leading-[1.08] font-bold tracking-[-0.015em] transition-colors duration-140 ease-[ease] group-hover:text-accent">
               {project.title}
             </h3>
-            <span class="flex items-baseline gap-5">
+            <p class="m-0 text-[15px] leading-[26px] text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
+              {project.description}
+            </p>
+            <div class="flex flex-wrap gap-1.75 pt-0.5">
+              {project.tags.map((tag) => (
+                <span class="text-tag-ink rounded-full bg-[rgba(236,48,19,0.14)] px-2.5 py-1 text-[11px] tracking-wide">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div class="flex gap-2.25 pt-2">
               <a
                 href={project.codeHref}
-                class="border-ink hover:border-accent hover:text-accent border-b-2 pb-0.5 text-[13px] tracking-[0.06em] uppercase no-underline"
+                class="border-ink relative inline-flex items-center rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Code
+                <span class="sr-only">(opens in new tab)</span>
               </a>
               <a
                 href={project.visitHref}
-                class="border-ink hover:border-accent hover:text-accent border-b-2 pb-0.5 text-[13px] tracking-[0.06em] uppercase no-underline inline-flex items-center"
+                class="bg-ink text-paper border-ink relative inline-flex items-center rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Visit
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M7 7h10v10" />
-                  <path d="M7 17 17 7" />
-                </svg>
+                <span class="sr-only">(opens in new tab)</span>
               </a>
-            </span>
-          </div>
-          <p class="m-0 max-w-[65ch] text-[15px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
-            {project.description}
-          </p>
-          <div class="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span class="text-tag-ink px-2.5 py-1 text-[12px] tracking-wider bg-[rgba(236,48,19,0.14)]">
-                {tag}
-              </span>
-            ))}
+            </div>
           </div>
         </article>
       ))
@@ -344,6 +335,57 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
   </div>
 </section>
 
+<!-- Writing -->
+<section id="writing" class="pt-18 max-[640px]:pt-14">
+  <div class="mb-7 flex flex-wrap items-baseline justify-between gap-4.5">
+    <h2
+      class="font-heading m-0 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    >
+      <span aria-hidden="true" class="text-[0.85em]">📌</span>
+      What I've written
+    </h2>
+    <a
+      href="/blog"
+      class="border-ink relative inline-flex items-center gap-2 rounded-lg border-2 px-3 py-1.75 text-[11px] font-bold tracking-[0.09em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)] font-heading"
+    >
+      All posts
+    </a>
+  </div>
+  <div class="grid grid-cols-3 gap-3.5 max-[720px]:grid-cols-1">
+    {
+      BLOG_POSTS.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="group border-ink flex flex-col gap-2.25 rounded-[14px] border-2 p-5 no-underline transition-[translate,box-shadow] duration-120 ease-[ease] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:shadow-[6px_6px_0_var(--color-ink)]"
+        >
+          <span class="font-heading flex items-center justify-between gap-2.5 text-[10.5px] font-semibold tracking-[0.12em] text-[color-mix(in_srgb,var(--color-ink)_50%,transparent)] uppercase">
+            {post.date}
+            <span class="inline-flex items-center gap-1.25">
+              <span
+                aria-hidden="true"
+                class="bg-accent h-1.25 w-1.25 rounded-full"
+              />
+              {post.read}
+            </span>
+          </span>
+          <span class="font-heading text-ink line-clamp-2 text-[17px] leading-[1.24] font-bold transition-colors duration-140 ease-[ease] group-hover:text-accent">
+            {post.title}
+          </span>
+          <span class="line-clamp-3 text-[13.5px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]">
+            {post.excerpt}
+          </span>
+          <span
+            aria-hidden="true"
+            class="mt-auto pt-1.5 text-[15px] opacity-30 transition-[translate,opacity] duration-140 ease-[ease] group-hover:translate-x-0.75 group-hover:opacity-75"
+          >
+            →
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
 <!-- Contact -->
 <section id="contact" class="pt-18 max-[640px]:pt-14">
   <h2
@@ -353,7 +395,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
     Let's talk
   </h2>
   <div
-    class="border-ink bg-accent text-paper border-[3px] shadow-[8px_8px_0_var(--color-ink)]"
+    class="border-ink bg-accent text-paper rounded-[18px] border-[3px] shadow-[8px_8px_0_var(--color-ink)]"
   >
     <div class="px-6 py-9 max-[640px]:px-5 max-[640px]:py-7">
       <h3
@@ -367,7 +409,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
       </p>
       <a
         href={`mailto:${SITE.email}`}
-        class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-2 border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase no-underline"
+        class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-2 rounded-[10px] border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase no-underline"
       >
         {SITE.email}
         <svg
@@ -378,6 +420,7 @@ import { SITE, PROJECTS, JOBS } from "../data/site";
           stroke-width="2.5"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
         >
           <path d="M5 12h14"></path>
           <path d="m13 6 6 6-6 6"></path>
