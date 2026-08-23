@@ -18,55 +18,76 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     gracefully at a video game. JK 😉. I don't lose often.
   </p>
   <div class="mt-2 grid sm:grid-cols-3 gap-3.5 grid-cols-1">
-    <a
-      href={`mailto:${SITE.email}`}
-      class="bg-ink text-paper border-ink relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-paper hover:shadow-[6px_6px_0_var(--color-accent)] font-heading"
-    >
-      <svg
-        width="17"
-        height="17"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+    <div class="group relative">
+      <div
+        class="bg-accent absolute inset-px rounded-md transition-transform duration-120 ease-[ease] group-hover:translate-x-0.5 group-hover:translate-y-0.5"
         aria-hidden="true"
       >
-        <rect width="20" height="16" x="2" y="4" rx="0"></rect>
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-      </svg>
-      Email me
-    </a>
-    <a
-      href={SITE.resumeHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="border-ink font-heading relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-accent hover:shadow-[6px_6px_0_var(--color-ink)]"
-    >
-      Resume / CV
-      <span class="sr-only">(opens in new tab)</span>
-      <svg
-        width="17"
-        height="17"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+      </div>
+      <a
+        href={`mailto:${SITE.email}`}
+        class="bg-ink text-paper border-ink font-heading relative flex w-full items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase transition-transform duration-120 ease-[ease] will-change-transform group-hover:-translate-x-0.75 group-hover:-translate-y-0.75"
+      >
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="20" height="16" x="2" y="4" rx="0"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+        Email me
+      </a>
+    </div>
+    <div class="group relative">
+      <div
+        class="bg-ink absolute inset-px rounded-md transition-transform duration-120 ease-[ease] group-hover:translate-x-0.5 group-hover:translate-y-0.5"
         aria-hidden="true"
       >
-        <path d="M7 7h10v10"></path>
-        <path d="M7 17 17 7"></path>
-      </svg>
-    </a>
-    <a
-      href="#projects"
-      class="bg-accent border-accent font-heading relative inline-flex items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] before:absolute before:-inset-0.75 before:content-[''] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:text-[#f3f2f2] hover:shadow-[6px_6px_0_var(--color-ink)]"
-    >
-      View projects
-    </a>
+      </div>
+      <a
+        href={SITE.resumeHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border-ink bg-paper font-heading relative flex w-full items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] uppercase transition-transform duration-120 ease-[ease] will-change-transform group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 group-hover:text-accent"
+      >
+        Resume / CV
+        <span class="sr-only">(opens in new tab)</span>
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M7 7h10v10"></path>
+          <path d="M7 17 17 7"></path>
+        </svg>
+      </a>
+    </div>
+    <div class="group relative">
+      <div
+        class="bg-ink absolute inset-px rounded-md transition-transform duration-120 ease-[ease] group-hover:translate-x-0.75 group-hover:translate-y-0.75"
+        aria-hidden="true"
+      >
+      </div>
+      <a
+        href="#projects"
+        class="bg-accent border-accent font-heading relative flex w-full items-center justify-center gap-2.5 rounded-md border-2 px-5 py-3.25 text-[14px] font-bold tracking-[0.04em] text-[#f3f2f2] uppercase transition-transform will-change-transform duration-120 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75"
+      >
+        View projects
+      </a>
+    </div>
   </div>
 </header>
 
@@ -117,127 +138,147 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     What I work with
   </h2>
 
-  <div
-    class="border-ink bg-panel overflow-hidden rounded-[14px] border-2 shadow-[7px_7px_0_var(--color-ink)]"
-  >
+  <div class="relative">
+    {/* Offset shadow */}
     <div
-      class="flex items-center justify-between border-b border-[rgba(243,242,242,0.15)] px-4 py-2.5"
+      class="absolute inset-0 translate-x-[7px] translate-y-[7px] rounded-[14px] bg-ink"
+      aria-hidden="true"
     >
-      <span class="font-mono text-[12px] text-[rgba(243,242,242,0.6)]">
-        skills.ts
-      </span>
-
-      <div class="flex gap-1.5">
-        <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
-        <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
-        <span class="bg-accent h-2 w-2"></span>
-      </div>
     </div>
 
+    {/* Card */}
     <div
-      class="font-mono overflow-x-auto py-5 text-[14px] leading-6 text-[#f3f2f2] max-[640px]:text-[12.5px]"
+      class="relative overflow-hidden rounded-[14px] border-2 border-ink bg-panel"
     >
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          1
+      {/* Header */}
+      <div
+        class="flex items-center justify-between border-b border-[rgba(243,242,242,0.15)] px-4 py-2.5"
+      >
+        <span class="font-mono text-[12px] text-[rgba(243,242,242,0.6)]">
+          skills.ts
         </span>
 
-        <span class="whitespace-pre">
-          <span class="text-accent font-bold">const</span>{" skills = {"}
-        </span>
+        <div class="flex gap-1.5">
+          <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
+          <span class="h-2 w-2 bg-[rgba(243,242,242,0.25)]"></span>
+          <span class="bg-accent h-2 w-2"></span>
+        </div>
       </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          2
-        </span>
+      {/* Code */}
+      <div
+        class="font-mono overflow-x-auto py-5 text-[14px] leading-6 text-[#f3f2f2] max-[640px]:text-[12.5px]"
+      >
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            1
+          </span>
 
-        <span class="whitespace-pre">
-          {"  frontend:  ["}
-          <span class="text-accent">'React'</span>{", "}
-          <span class="text-accent">'Next.js'</span>{", "}
-          <span class="text-accent">'TypeScript'</span>{", "}
-          <span class="text-accent">'Astro'</span>
-          {"],"}
-        </span>
-      </div>
+          <span class="whitespace-pre">
+            <span class="text-accent font-bold">const</span>
+            {" skills = {"}
+          </span>
+        </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          3
-        </span>
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            2
+          </span>
 
-        <span class="whitespace-pre">
-          {"  styling:   ["}
-          <span class="text-accent">'Tailwind CSS'</span>
-          {"],"}
-        </span>
-      </div>
+          <span class="whitespace-pre">
+            {"  frontend:  ["}
+            <span class="text-accent">'React'</span>
+            {", "}
+            <span class="text-accent">'Next.js'</span>
+            {", "}
+            <span class="text-accent">'TypeScript'</span>
+            {", "}
+            <span class="text-accent">'Astro'</span>
+            {"],"}
+          </span>
+        </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          4
-        </span>
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            3
+          </span>
 
-        <span class="whitespace-pre">
-          {"  animation: ["}
-          <span class="text-accent">'GSAP'</span>{", "}
-          <span class="text-accent">'Framer Motion'</span>
-          {"],"}
-        </span>
-      </div>
+          <span class="whitespace-pre">
+            {"  styling:   ["}
+            <span class="text-accent">'Tailwind CSS'</span>
+            {"],"}
+          </span>
+        </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          5
-        </span>
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            4
+          </span>
 
-        <span class="whitespace-pre">
-          {"  state:     ["}
-          <span class="text-accent">'TanStack Query'</span>{", "}
-          <span class="text-accent">'Redux'</span>{", "}
-          <span class="text-accent">'Zustand'</span>
-          {"],"}
-        </span>
-      </div>
+          <span class="whitespace-pre">
+            {"  animation: ["}
+            <span class="text-accent">'GSAP'</span>
+            {", "}
+            <span class="text-accent">'Framer Motion'</span>
+            {"],"}
+          </span>
+        </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          6
-        </span>
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            5
+          </span>
 
-        <span class="whitespace-pre">
-          {"  backend:   ["}
-          <span class="text-accent">'Express.js'</span>{", "}
-          <span class="text-accent">'MySQL'</span>
-          {"],"}
-        </span>
-      </div>
+          <span class="whitespace-pre">
+            {"  state:     ["}
+            <span class="text-accent">'TanStack Query'</span>
+            {", "}
+            <span class="text-accent">'Redux'</span>
+            {", "}
+            <span class="text-accent">'Zustand'</span>
+            {"],"}
+          </span>
+        </div>
 
-      <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
-        <span
-          class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
-        >
-          7
-        </span>
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            6
+          </span>
 
-        <span class="whitespace-pre">
-          {"} "}
-          <span class="text-accent font-bold">as const</span>
-          {";"}
-        </span>
+          <span class="whitespace-pre">
+            {"  backend:   ["}
+            <span class="text-accent">'Express.js'</span>
+            {", "}
+            <span class="text-accent">'MySQL'</span>
+            {"],"}
+          </span>
+        </div>
+
+        <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
+          <span
+            class="w-4 shrink-0 select-none text-right text-[rgba(243,242,242,0.25)]"
+          >
+            7
+          </span>
+
+          <span class="whitespace-pre">
+            {"} "}
+            <span class="text-accent font-bold">as const</span>
+            {";"}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -255,16 +296,25 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     {
       PROJECTS.map((project) => (
         <article class="group border-ink/15 grid grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] items-center gap-7.5 border-t-2 py-9.5 max-[640px]:grid-cols-1 max-[640px]:gap-5.5">
-          <figure class="border-ink m-0 overflow-hidden rounded-[14px] border-2 transition-[translate,box-shadow] duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 group-hover:shadow-[7px_7px_0_var(--color-ink)]">
-            <Image
-              src={project.imgSrc}
-              alt={project.title}
-              loading="lazy"
-              decoding="async"
-              quality="mid"
-              class="aspect-4/3 w-full object-cover"
+          <div class="relative">
+            {/* Shadow */}
+            <div
+              class="bg-ink absolute inset-0 rounded-[14px] transition-transform duration-140 ease-[ease] group-hover:translate-x-0.75 group-hover:translate-y-0.75"
+              aria-hidden="true"
             />
-          </figure>
+
+            {/* Card */}
+            <figure class="border-ink relative m-0 w-full overflow-hidden rounded-[14px] border-2 transition-transform duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 will-change-transform">
+              <Image
+                src={project.imgSrc}
+                alt={project.title}
+                loading="lazy"
+                decoding="async"
+                quality="mid"
+                class="aspect-4/3 w-full object-cover"
+              />
+            </figure>
+          </div>
           <div class="flex min-w-0 flex-col gap-3">
             <h3 class="font-heading text-ink m-0 text-[26px] leading-[1.08] font-bold tracking-[-0.015em] transition-colors duration-140 ease-[ease] group-hover:text-accent">
               {project.title}
@@ -280,24 +330,36 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
               ))}
             </div>
             <div class="flex gap-2.25 pt-2">
-              <a
-                href={project.codeHref}
-                class="border-ink relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Code
-                <span class="sr-only">(opens in new tab)</span>
-              </a>
-              <a
-                href={project.visitHref}
-                class="bg-ink text-paper border-ink relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)]"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit
-                <span class="sr-only">(opens in new tab)</span>
-              </a>
+              <span class="group/code relative inline-flex">
+                <span
+                  class="bg-ink absolute inset-px rounded-md duration-120 ease-[ease] transition-transform group-hover/code:translate-x-0.5 group-hover/code:translate-y-0.5"
+                  aria-hidden="true"
+                />
+                <a
+                  href={project.codeHref}
+                  class="border-ink bg-paper relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase transition-transform duration-120 ease-[ease] will-change-transform group-hover/code:-translate-x-0.5 group-hover/code:-translate-y-0.5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Code
+                  <span class="sr-only">(opens in new tab)</span>
+                </a>
+              </span>
+              <span class="group/visit relative inline-flex">
+                <span
+                  class="bg-accent absolute inset-px rounded-md duration-120 ease-[ease] transition-transform group-hover/visit:translate-x-0.5 group-hover/visit:translate-y-0.5"
+                  aria-hidden="true"
+                />
+                <a
+                  href={project.visitHref}
+                  class="bg-ink text-paper border-ink relative inline-flex items-center rounded-md border-2 px-3 py-1.75 text-[11px] font-bold font-heading tracking-[0.06em] uppercase transition-transform duration-120 ease-[ease] will-change-transform group-hover/visit:-translate-x-0.5 group-hover/visit:-translate-y-0.5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Live Link
+                  <span class="sr-only">(opens in new tab)</span>
+                </a>
+              </span>
             </div>
           </div>
         </article>
@@ -344,43 +406,54 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
       <span aria-hidden="true" class="text-[0.85em]">📌</span>
       What I've written
     </h2>
-    <a
-      href="/blog"
-      class="border-ink relative inline-flex items-center gap-2 rounded-md border-2 px-3 py-1.75 text-[11px] font-bold tracking-[0.09em] uppercase no-underline transition-[translate,box-shadow] duration-120 ease-[ease] will-change-transform before:absolute before:-inset-0.5 before:content-[''] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-ink)] font-heading"
-    >
-      All posts
-    </a>
+    <span class="group relative inline-flex">
+      <span
+        class="bg-ink absolute inset-px rounded-md transition-transform duration-120 ease-[ease] group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+        aria-hidden="true"></span>
+      <a
+        href="/blog"
+        class="border-ink bg-paper font-heading relative inline-flex items-center gap-2 rounded-md border-2 px-3 py-1.75 text-[11px] font-bold tracking-[0.09em] uppercase transition-transform duration-120 ease-[ease] will-change-transform group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+      >
+        All posts
+      </a>
+    </span>
   </div>
   <div class="grid grid-cols-3 gap-3.5 max-[720px]:grid-cols-1">
     {
       BLOG_POSTS.map((post) => (
-        <a
-          href={`/blog/${post.slug}`}
-          class="group border-ink flex flex-col gap-2.25 rounded-[14px] border-2 p-5 no-underline transition-[translate,box-shadow] duration-120 ease-[ease] hover:-translate-x-0.75 hover:-translate-y-0.75 hover:shadow-[6px_6px_0_var(--color-ink)]"
-        >
-          <span class="font-heading flex items-center justify-between gap-2.5 text-[10.5px] font-semibold tracking-[0.12em] text-[color-mix(in_srgb,var(--color-ink)_50%,transparent)] uppercase">
-            {post.date}
-            <span class="inline-flex items-center gap-1.25">
-              <span
-                aria-hidden="true"
-                class="bg-accent h-1.25 w-1.25 rounded-full"
-              />
-              {post.read}
-            </span>
-          </span>
-          <span class="font-heading text-ink line-clamp-2 text-[17px] leading-[1.24] font-bold transition-colors duration-140 ease-[ease] group-hover:text-accent">
-            {post.title}
-          </span>
-          <span class="line-clamp-3 text-[13.5px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]">
-            {post.excerpt}
-          </span>
-          <span
+        <div class="group relative">
+          <div
+            class="bg-ink absolute inset-px rounded-[14px] transition-transform duration-120 ease-[ease] group-hover:translate-x-0.75 group-hover:translate-y-0.75"
             aria-hidden="true"
-            class="mt-auto pt-1.5 text-[15px] opacity-30 transition-[translate,opacity] duration-140 ease-[ease] group-hover:translate-x-0.75 group-hover:opacity-75"
+          />
+          <a
+            href={`/blog/${post.slug}`}
+            class="border-ink bg-paper relative flex h-full w-full flex-col gap-2.25 rounded-[14px] border-2 p-5 transition-transform duration-120 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 will-change-transform"
           >
-            →
-          </span>
-        </a>
+            <span class="font-heading flex items-center justify-between gap-2.5 text-[10.5px] font-semibold tracking-[0.12em] text-[color-mix(in_srgb,var(--color-ink)_50%,transparent)] uppercase">
+              {post.date}
+              <span class="inline-flex items-center gap-1.25">
+                <span
+                  aria-hidden="true"
+                  class="bg-accent h-1.25 w-1.25 rounded-full"
+                />
+                {post.read}
+              </span>
+            </span>
+            <span class="font-heading text-ink line-clamp-2 text-[17px] leading-[1.24] font-bold transition-colors duration-140 ease-[ease] group-hover:text-accent">
+              {post.title}
+            </span>
+            <span class="line-clamp-3 text-[13.5px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]">
+              {post.excerpt}
+            </span>
+            <span
+              aria-hidden="true"
+              class="mt-auto pt-1.5 text-[15px] opacity-30 transition-[translate,opacity] duration-140 ease-[ease] group-hover:translate-x-0.75 group-hover:opacity-75"
+            >
+              →
+            </span>
+          </a>
+        </div>
       ))
     }
   </div>
@@ -394,38 +467,45 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Let's talk
   </h2>
-  <div
-    class="border-ink bg-accent text-paper rounded-[18px] border-[3px] shadow-[8px_8px_0_var(--color-ink)]"
-  >
-    <div class="px-6 py-9 max-[640px]:px-5 max-[640px]:py-7">
-      <h3
-        class="font-heading ml-[-0.04em] m-0 mb-4 text-[clamp(28px,4.5vw,44px)] leading-[1.02] font-bold tracking-[-0.01em] uppercase"
-      >
-        Let's build<br />something.
-      </h3>
-      <p class="font-heading m-0 mb-6 text-[15px] font-bold">
-        The fastest way to reach me is email. I read everything, even the weird
-        ones.
-      </p>
-      <a
-        href={`mailto:${SITE.email}`}
-        class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-2 rounded-[10px] border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase no-underline"
-      >
-        {SITE.email}
-        <svg
-          class="w-[13px] h-[13px] sm:w-[18px] sm:h-[18px]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
+  <div class="relative">
+    <div
+      class="bg-ink absolute inset-0 translate-x-1.75 translate-y-1.75 rounded-[18px]"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="border-ink bg-accent text-paper relative rounded-[18px] border-[3px]"
+    >
+      <div class="px-6 py-9 max-[640px]:px-5 max-[640px]:py-7">
+        <h3
+          class="font-heading ml-[-0.04em] m-0 mb-4 text-[clamp(28px,4.5vw,44px)] leading-[1.02] font-bold tracking-[-0.01em] uppercase"
         >
-          <path d="M5 12h14"></path>
-          <path d="m13 6 6 6-6 6"></path>
-        </svg>
-      </a>
+          Let's build<br />something.
+        </h3>
+        <p class="font-heading m-0 mb-6 text-[15px] font-bold">
+          The fastest way to reach me is email. I read everything, even the
+          weird ones.
+        </p>
+        <a
+          href={`mailto:${SITE.email}`}
+          class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-2 rounded-[10px] border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase"
+        >
+          {SITE.email}
+          <svg
+            class="w-[13px] h-[13px] sm:w-[18px] sm:h-[18px]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m13 6 6 6-6 6"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>

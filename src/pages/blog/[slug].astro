@@ -27,7 +27,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
 <BlogLayout>
   <a
     href="/blog"
-    class="font-heading group inline-flex items-center gap-2.5 text-sm leading-5 font-medium text-ink/62 no-underline transition-colors duration-160 hover:text-accent"
+    class="font-heading group inline-flex items-center gap-2.5 text-sm leading-5 font-medium text-ink/62 transition-colors duration-160 hover:text-accent"
   >
     <span
       class="inline-flex transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-x-1.25"
@@ -115,7 +115,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
             <a
               href={`#${heading.slug}`}
               data-toc-link={heading.slug}
-              class="block py-2.5 pl-5 text-[13.5px] leading-5 text-ink/55 no-underline transition-[color,transform] duration-180 ease-[ease] hover:translate-x-0.5 hover:text-ink"
+              class="block py-2.5 pl-5 text-[13.5px] leading-5 text-ink/55  transition-[color,transform] duration-180 ease-[ease] hover:translate-x-0.5 hover:text-ink"
             >
               {heading.text}
             </a>
