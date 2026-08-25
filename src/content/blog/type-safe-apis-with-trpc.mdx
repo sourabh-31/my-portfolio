@@ -1,0 +1,605 @@
+---
+title: "Stop Manually Typing Your API Responses in TypeScript"
+description: Learn how tRPC provides end-to-end type safety between TypeScript frontends and backends without manually duplicating API response types.
+publishDate: 25 Aug 2026
+readingTime: 12
+cover: "../../assets/blog/type-safe-apis-with-trpc.png"
+tags:
+  - TypeScript
+  - tRPC
+  - API Design
+---
+
+Your backend returns some data, and the first thing you do on the frontend is write a TypeScript type for it. You look at the response, figure out its shape, and then manually recreate that same information on the frontend. It works, until the backend changes and your two definitions start drifting apart.
+
+```typescript
+type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+```
+
+Then you use it in your frontend:
+
+```typescript
+const response = await fetch("/api/users");
+
+const users: User[] = await response.json();
+```
+
+## The Problem: Two Copies of the Same Contract
+
+The trouble starts on the day the backend changes. Maybe `email` becomes `emailAddress`. Maybe `name` becomes optional. Maybe the response gets wrapped inside a `data` object. The backend changes, but your frontend type does not, and now you have two versions of reality:
+
+```text
+Backend:  "emailAddress"
+Frontend: "email"
+```
+
+TypeScript cannot save you here, because as far as TypeScript knows, your manually written `User` type is still correct. Code like `console.log(user.email)` compiles fine. You might only discover the problem when the application is running.
+
+Notice what the real issue is. It isn't that the type was hard to write. It's that **you wrote information that already existed somewhere else**. The backend already knows the shape of the response, and now the frontend knows it too. That's duplication, and duplicated information eventually gets out of sync. You're maintaining two separate definitions of the same contract.
+
+This feels small when you're starting a project and gets increasingly painful as the codebase grows. So what if the backend could be the source of truth, and the frontend could automatically understand its API?
+
+That's where **tRPC** comes in.
+
+## What tRPC Needs in Order to Work
+
+tRPC is designed for **TypeScript-to-TypeScript communication**. A typical setup looks like this:
+
+```text
+React / Next.js
+      ↓
+    tRPC
+      ↓
+Node.js / TypeScript
+      ↓
+   Database
+```
+
+The reason tRPC can give the frontend automatic knowledge of the backend's types is that both sides are written in TypeScript. The frontend can access the backend router's type:
+
+```typescript
+export type AppRouter = typeof appRouter;
+```
+
+and from that, TypeScript can understand the procedures, inputs, and outputs.
+
+If your backend is written in Go, Python, Java, or Rust, you cannot simply share its TypeScript types with the frontend. In that situation, a language-independent API contract such as OpenAPI is a better fit. The distinction that matters:
+
+> **tRPC gives you end-to-end type safety when your client and server are both TypeScript.**
+
+A monorepo is convenient for this, but it is **not required**. The frontend simply needs access to the server's router type at development and build time, which can be handled through a shared package or another repository setup.
+
+## Letting the Backend Be the Source of Truth
+
+This is the idea behind tRPC. Instead of manually defining your API types on the frontend, you define your API procedures on the backend. TypeScript understands those procedures, and the frontend gets the types automatically.
+
+```text
+Backend
+   │
+   │ defines procedures
+   ▼
+  tRPC
+   │
+   │ TypeScript inference
+   ▼
+Frontend
+```
+
+You don't copy interfaces by hand, and you don't need a separate frontend type for every API response. The types are inferred from the server's TypeScript code.
+
+## Building a Type-Safe API
+
+Enough theory. Let's build a small application with users and watch the types travel from the server to the client without anyone writing them twice.
+
+### Defining the Router
+
+Our backend has four operations:
+
+```text
+users.list
+users.getById
+users.create
+users.delete
+```
+
+Using current tRPC patterns, we can define a router:
+
+```typescript
+import { initTRPC } from "@trpc/server";
+import { z } from "zod";
+
+const t = initTRPC.create();
+
+const users = [
+  {
+    id: "1",
+    name: "Sourabh",
+    email: "sourabh@example.com",
+  },
+  {
+    id: "2",
+    name: "Alice",
+    email: "alice@example.com",
+  },
+];
+
+export const appRouter = t.router({
+  users: t.router({
+    list: t.procedure.query(() => {
+      return users;
+    }),
+
+    getById: t.procedure
+      .input(
+        z.object({
+          id: z.string(),
+        }),
+      )
+      .query(({ input }) => {
+        return users.find((user) => user.id === input.id);
+      }),
+
+    create: t.procedure
+      .input(
+        z.object({
+          name: z.string(),
+          email: z.email(),
+        }),
+      )
+      .mutation(({ input }) => {
+        const user = {
+          id: String(users.length + 1),
+          name: input.name,
+          email: input.email,
+        };
+
+        users.push(user);
+
+        return user;
+      }),
+
+    delete: t.procedure
+      .input(
+        z.object({
+          id: z.string(),
+        }),
+      )
+      .mutation(({ input }) => {
+        const index = users.findIndex((user) => user.id === input.id);
+
+        if (index === -1) {
+          throw new Error("User not found");
+        }
+
+        users.splice(index, 1);
+
+        return {
+          success: true,
+        };
+      }),
+  }),
+});
+
+export type AppRouter = typeof appRouter;
+```
+
+That last line is the one that matters. `export type AppRouter = typeof appRouter;` exposes the router's type to the client, and everything below depends on it.
+
+### Calling It From the Frontend
+
+Now the frontend can use the router:
+
+```typescript
+const { data: users } = trpc.users.list.useQuery();
+```
+
+TypeScript already knows that `users` is:
+
+```typescript
+{
+  id: string;
+  name: string;
+  email: string;
+}
+[] | undefined;
+```
+
+So you can simply write:
+
+```tsx
+{
+  users?.map((user) => (
+    <div key={user.id}>
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
+    </div>
+  ));
+}
+```
+
+Now look back at what we didn't write. There's no `User` type anywhere in this frontend, no copy of the backend response, and no separate API response type to keep synchronized. We never declared the shape at all. It was inferred from what the backend procedure returns, and that inference is the whole point.
+
+### Typed Inputs, Not Just Outputs
+
+This is one of the best parts of tRPC, and it isn't only about response types. Our backend says:
+
+```typescript
+.input(
+  z.object({
+    id: z.string(),
+  })
+)
+```
+
+So the frontend knows that `id` must be a string. This works:
+
+```typescript
+trpc.users.getById.useQuery({
+  id: "123",
+});
+```
+
+This doesn't, and TypeScript catches it:
+
+```typescript
+trpc.users.getById.useQuery({
+  id: 123,
+});
+```
+
+The same applies to mutations, with one difference worth getting right. `useMutation()` doesn't take the input. It creates the mutation object, and you pass the input when you call `.mutate()` (or `.mutateAsync()`):
+
+```typescript
+const createUser = trpc.users.create.useMutation();
+
+createUser.mutate({
+  name: "Bob",
+  email: "bob@example.com",
+});
+```
+
+The backend expects `{ name: string; email: string }`, so that call is valid and this one isn't, because your editor knows `email` is required:
+
+```typescript
+createUser.mutate({
+  name: "Bob",
+});
+```
+
+### Breaking the API on Purpose
+
+This is where tRPC becomes really interesting. Take our original procedure, which returns:
+
+```typescript
+return {
+  id: user.id,
+  name: user.name,
+  email: user.email,
+};
+```
+
+The frontend reads `user.email` and everything works. Now we change the backend:
+
+```typescript
+return {
+  id: user.id,
+  name: user.name,
+  emailAddress: user.email,
+};
+```
+
+We haven't touched the frontend, but the inferred type has changed, so TypeScript can tell us immediately:
+
+```text
+Property 'email' does not exist...
+```
+
+This is the part that matters. Instead of discovering the problem after deploying, you discover it while writing the code:
+
+```text
+Backend implementation changes
+        ↓
+Inferred router type changes
+        ↓
+Frontend's inferred types change
+        ↓
+TypeScript reports incompatible usage
+        ↓
+You fix it before deployment
+```
+
+Nothing is generated along that path. No new type file appears in your frontend. The frontend is reading the router's type directly, so the moment the procedure's return value changes, every call site that relied on the old shape stops type-checking.
+
+Compare that to the version without a shared type relationship, where the compiler thinks everything is fine right up until a user hits the endpoint:
+
+```text
+Backend changes
+      ↓
+Frontend's manual type stays unchanged
+      ↓
+Compiler thinks everything is fine
+      ↓
+Application runs
+      ↓
+💥 Runtime problem
+```
+
+That said, tRPC doesn't magically prevent **all runtime errors**. If the backend returns invalid data that still satisfies the same TypeScript type, TypeScript can't know that. A value of `{ age: -500 }` is still technically `{ age: number }`. So the accurate claim isn't "tRPC eliminates runtime API errors." It's this:
+
+> **tRPC can move many contract-breaking API errors from runtime to compile time.**
+
+## Under the Hood
+
+The setup above can feel a little magical, and magic is a bad foundation for architectural decisions. So it's worth being precise about what tRPC is actually doing, what it validates, and what it deliberately leaves to you.
+
+### No Types Are Sent Over the Network
+
+It might look like tRPC is somehow sending TypeScript types over the internet. It isn't. TypeScript types don't exist at runtime, and with the HTTP adapters we're using here, your application is still making normal HTTP requests:
+
+```text
+Frontend
+   │
+   │ HTTP request
+   ▼
+tRPC server
+   │
+   ▼
+Procedure
+   │
+   ▼
+Database
+```
+
+The difference is what happens during development. The frontend has access to the **type of the server router**, so TypeScript can understand things like:
+
+```text
+users.list
+    ↓
+returns User[]
+
+users.getById
+    ↓
+accepts { id: string }
+    ↓
+returns User | undefined
+
+users.create
+    ↓
+accepts { name: string, email: string }
+    ↓
+returns User
+```
+
+The HTTP request still happens at runtime. The type safety happens at compile time. That distinction is worth holding on to.
+
+Note where those two halves come from. The input types are declared, since we wrote a Zod schema for them. The output types are not declared anywhere: they're inferred from the value each procedure actually returns. `users.list` returns `User[]` only because `return users` happens to be an array of that shape. Change the implementation and the output type changes with it, which is exactly what makes the frontend notice.
+
+### Runtime Validation With Zod
+
+You may have noticed Zod in the example:
+
+```typescript
+z.object({
+  id: z.string(),
+});
+```
+
+That's useful precisely because TypeScript types disappear when your code runs, while Zod exists at runtime and can actually check the data. A schema like this one does two jobs at once:
+
+```typescript
+const createUserInput = z.object({
+  name: z.string(),
+  email: z.email(),
+});
+```
+
+Zod validates the incoming request at runtime, and TypeScript derives the corresponding static type from that same schema. One definition, two layers, which matters because compile-time type safety alone does nothing to check untrusted data arriving from the network:
+
+```text
+Compile time
+     ↓
+TypeScript
+
+Runtime
+     ↓
+Zod validation
+```
+
+### Context, Authentication, and Authorization
+
+So far we've used plain `t.procedure`. That's enough to demonstrate the core idea, but a real application will usually have protected procedures:
+
+```text
+Public procedure
+    ↓
+Anyone can call it
+
+Protected procedure
+    ↓
+User must be authenticated
+
+Admin procedure
+    ↓
+User must have permission
+```
+
+Before the middleware makes sense, you need to know where `ctx` comes from. tRPC builds a context object for every request, and that's where you put anything derived from the incoming request, including the authenticated user. The `initTRPC.create()` from earlier grows into:
+
+```typescript
+type Context = {
+  user?: { id: string; name: string };
+};
+
+const t = initTRPC.context<Context>().create();
+```
+
+In a real application, `ctx.user` gets populated by your context function after it reads the request's authentication information, such as a session cookie or bearer token. With that in place, a simplified protected procedure could look like this:
+
+```typescript
+const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new Error("Unauthorized");
+  }
+
+  return next({
+    ctx: {
+      user: ctx.user,
+    },
+  });
+});
+```
+
+Then:
+
+```typescript
+const getProfile = protectedProcedure.query(({ ctx }) => {
+  return ctx.user;
+});
+```
+
+The exact authentication setup depends on your application and auth provider, but the idea is that tRPC lets you build reusable middleware and procedures around your application's context. You don't need this complexity to understand tRPC, though it's worth knowing that real tRPC codebases don't consist of `t.procedure` everywhere.
+
+This is also the right place to name a distinction that's easy to blur once everything is type-safe. This call:
+
+```typescript
+const deleteUser = trpc.users.delete.useMutation();
+
+deleteUser.mutate({ id: "123" });
+```
+
+is perfectly type-safe, and that tells you nothing about whether the person making it is allowed to delete user 123. **Type safety tells you whether a request has the right shape. Authentication and authorization determine whether the caller is permitted to make it.** tRPC gives you the first through its type inference and shared router type. The second is still your job, and it lives in your context and middleware.
+
+## Why This Beats Simply Writing Less Code
+
+It's tempting to say that tRPC reduces the amount of code you write. Sometimes it does, but that's not the strongest argument. The stronger one is that **tRPC reduces duplicated API definitions**. Without it, you might be maintaining:
+
+```text
+Backend implementation
+        +
+Frontend types
+        +
+Frontend API calls
+        +
+API documentation
+```
+
+With tRPC:
+
+```text
+Backend procedure
+        ↓
+Type inference
+        ↓
+Type-safe client
+```
+
+The goal isn't fewer lines. The goal is **fewer places where the same information has to be maintained**.
+
+## The Tradeoffs
+
+tRPC is a genuinely good fit for some applications and a genuinely poor one for others. Both halves of that sentence deserve equal space.
+
+### Where tRPC Pays Off
+
+**1. No manually duplicated response types.** You don't write `type User = ...` in your frontend for every endpoint, because the types are inferred from the backend.
+
+**2. Backend changes become visible to the frontend.** This is the big one. A breaking API change can cause a TypeScript error in the frontend before the code reaches production.
+
+**3. Inputs are type-safe too.** You get autocomplete and type checking on the way in, not just on the way out, so your editor knows exactly what each procedure expects.
+
+**4. Refactoring becomes safer.** Rename `getById` to `findById` and your frontend references become compiler errors instead of silently going stale. The compiler turns into a map of what your change affected.
+
+**5. Better developer experience.** Instead of remembering `GET /api/users/:id`, `POST /api/users`, and `DELETE /api/users/:id`, you work with `trpc.users.getById`, `trpc.users.create`, and `trpc.users.delete`, with autocomplete the whole way.
+
+### Where tRPC Costs You
+
+**1. Your frontend and backend become more tightly coupled.** This is the biggest architectural tradeoff. tRPC works beautifully when both ends are TypeScript, but if your API is served by a mix of Go, Python, and Java services, you can't share a TypeScript router type with all of them, and something like OpenAPI becomes more attractive.
+
+**2. The client needs access to the server's types.** End-to-end type safety depends on the frontend being able to reach the server router type at development and build time. A monorepo makes this convenient:
+
+```text
+my-app/
+├── apps/
+│   ├── web/
+│   └── api/
+└── packages/
+```
+
+But as noted earlier, a monorepo isn't required. Publishing the router package or using another shared-package setup works too.
+
+**3. Very large routers can make TypeScript work harder.** tRPC relies heavily on type inference. If you build a huge API with deeply nested routers and complex types, TypeScript may have a lot more work to do, which can show up as:
+
+- slower autocomplete
+- slower type-checking
+- slower editor responsiveness
+- more complicated type errors
+
+This doesn't mean "tRPC always makes VS Code slow." It means that at large enough scale, the type graph created by an inference-heavy API can become expensive for TypeScript to process. For a small or medium application this may never matter. For a very large codebase, it's worth monitoring.
+
+**4. It is primarily a TypeScript solution.** This is both its biggest strength and its clearest limitation. If your API needs to be consumed by clients written in Python, Go, Java, Swift, or Kotlin, you want a language-independent contract instead, which is where OpenAPI, GraphQL, or gRPC make more sense.
+
+## Choosing the Right Tool
+
+tRPC is one answer to keeping a frontend and backend in sync, not the answer. The alternatives overlap with it, but none of them are interchangeable in every situation.
+
+### The Alternatives
+
+These four are genuine API-contract alternatives, each solving the same problem under different assumptions:
+
+| Tool         | Main approach                     | Good fit                                 |
+| ------------ | --------------------------------- | ---------------------------------------- |
+| **tRPC**     | End-to-end type-safe RPC          | TypeScript frontend + TypeScript backend |
+| **ts-rest**  | Type-safe REST contract           | Teams that want REST + strong typing     |
+| **OpenAPI**  | Language-independent API contract | Large or multi-language systems          |
+| **Hono RPC** | Type-safe HTTP client for Hono    | Lightweight TypeScript/edge backends     |
+
+Server Actions come up in the same conversations but belong in a separate category, which is worth flagging before the comparison rather than after.
+
+**ts-rest** takes a contract-first REST approach. Instead of thinking in terms of `users.getById()`, you define an HTTP API such as `GET /users/:id` and share the contract between the server and client. That's attractive if you want type safety while keeping a more traditional REST architecture.
+
+**OpenAPI** takes the idea of an explicit contract further:
+
+```text
+             OpenAPI contract
+                /        \
+               ↓          ↓
+           Backend      Frontend
+                          ↓
+                    Generated types
+```
+
+This is especially useful when the two sides aren't both TypeScript, or when many teams and services need to agree on an API.
+
+**Hono RPC** provides type-safe client access to Hono routes while staying close to normal HTTP, which is worth a look if you want lightweight TypeScript infrastructure rather than a full RPC framework.
+
+**Server Actions**, the related option, aren't really an API contract at all. Inside frameworks such as Next.js they let you call server-side functions from your application without designing an API for the operation in the first place, which is a different answer to a nearby question rather than a competing contract format.
+
+### When to Use What
+
+A simple rule:
+
+**TypeScript frontend and TypeScript backend?** tRPC is worth considering. You get excellent developer experience and end-to-end type safety.
+
+**TypeScript frontend and a Go, Python, or Java backend?** Look at OpenAPI with a generated TypeScript client, which gives you a language-independent API boundary.
+
+**Large organization with many services and teams?** An explicit contract such as OpenAPI becomes more attractive, because it gives teams a boundary that isn't tied to one implementation or language.
+
+**TypeScript team that wants REST?** Take a look at ts-rest.
+
+None of these is universally better than the others. Don't pick a tool because it's popular. Pick the one that fits the way your systems actually communicate.
+
+## Derive, Don't Duplicate
+
+The most important thing you can take away from tRPC isn't actually tRPC. It's this:
+
+> **Don't maintain the same information in multiple places if your tooling can derive it from one source of truth.**
+
+Your backend already knows what its procedures accept and return. If your frontend is TypeScript too, rewriting those types by hand creates an unnecessary synchronization problem. tRPC removes much of that duplication by letting TypeScript carry the contract from the server to the client, which changes the daily experience from "did I remember to update the frontend type?" to "let the compiler tell me what broke."
+
+It isn't about eliminating APIs, or eliminating HTTP, or magically preventing every runtime bug. It's about making the relationship between your TypeScript backend and TypeScript frontend **explicit and type-safe**, and that convenience comes with real tradeoffs: tighter coupling, a client that needs the server's types, and more pressure on the compiler as the API grows. That's not a flaw in tRPC. It's the tradeoff behind its design.
+
+The less information you have to keep in sync by hand, the fewer opportunities you have for those pieces to disagree. And when they do disagree, the ideal time to find out isn't after your users hit the endpoint. **It's when you run the compiler.**

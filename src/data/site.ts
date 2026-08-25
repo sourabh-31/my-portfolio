@@ -1,5 +1,6 @@
 import pinseiImg from "../assets/pinsei.png";
 import forgeImg from "../assets/forge.png";
+import typeSafeApisWithTrpcImg from "../assets/blog/type-safe-apis-with-trpc.png";
 import webRenderingPatternImg from "../assets/blog/web-rendering-pattern.png";
 import webFontOptimizationImg from "../assets/blog/web-font-optimization.png";
 
@@ -32,6 +33,16 @@ export const PROJECTS = [
 ];
 
 export const BLOG_POSTS = [
+  {
+    slug: "type-safe-apis-with-trpc",
+    title: "Stop Manually Typing Your API Responses in TypeScript",
+    date: "25 Aug 2026",
+    read: "12 min",
+    tags: ["Typescript", "tRPC", "API Design"],
+    excerpt:
+      "Learn how tRPC provides end-to-end type safety between TypeScript frontends and backends without manually duplicating API response types.",
+    img: typeSafeApisWithTrpcImg,
+  },
   {
     slug: "web-rendering-pattern",
     title: "Understanding Web Rendering: CSR, SSR, SSG and More",
