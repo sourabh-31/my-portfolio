@@ -91,7 +91,7 @@ const [featured, ...rest] = BLOG_POSTS;
 </div>
 
 {
-  rest.map((post) => (
+  rest.map((post, index) => (
     <a
       href={`/blog/${post.slug}`}
       class="group grid grid-cols-[190px_minmax(0,1fr)_26px] items-stretch gap-6.5 py-6.5  max-[640px]:grid-cols-1 max-[640px]:gap-3"
@@ -99,7 +99,7 @@ const [featured, ...rest] = BLOG_POSTS;
       <Image
         src={post.img}
         alt={post.title}
-        loading="eager"
+        loading={index === 0 ? "eager" : "lazy"}
         decoding="async"
         quality="mid"
         class="rounded-lg"
