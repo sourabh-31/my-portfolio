@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-sans: var(--font-geist), system-ui, sans-serif;
   --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
 
   --color-ink: #201e1d;
   --color-paper: #f3f2f2;
