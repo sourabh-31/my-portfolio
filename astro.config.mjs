@@ -27,18 +27,18 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.local(),
-      name: "Archivo",
-      cssVariable: "--font-archivo",
+      name: "Geist",
+      cssVariable: "--font-geist",
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/archivo-400.woff2"],
+            src: ["./src/assets/fonts/geist-400.woff2"],
             weight: 400,
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/archivo-800.woff2"],
-            weight: 800,
+            src: ["./src/assets/fonts/geist-700.woff2"],
+            weight: 700,
             style: "normal",
           },
         ],
@@ -72,17 +72,17 @@ export default defineConfig({
 
     {
       provider: fontProviders.local(),
-      name: "Geist Mono",
-      cssVariable: "--font-geist-mono",
+      name: "Space Mono",
+      cssVariable: "--font-space-mono",
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/geist-mono-400.woff2"],
+            src: ["./src/assets/fonts/space-mono-400.woff2"],
             weight: 400,
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/geist-mono-700.woff2"],
+            src: ["./src/assets/fonts/space-mono-700.woff2"],
             weight: 700,
             style: "normal",
           },
