@@ -6,12 +6,12 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 <!-- Hero -->
 <header class="flex flex-col gap-5">
   <h1
-    class="font-heading ml-[-0.04em] m-0 text-[clamp(38px,6.4vw,58px)] leading-[1.06] font-bold tracking-[-0.02em]"
+    class="font-heading ml-[-0.04em] text-[clamp(38px,6.4vw,58px)] leading-[1.06] font-bold tracking-[-0.02em]"
   >
     Hi, I'm Sourabh 👋
   </h1>
   <p
-    class="m-0 text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]"
+    class="text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]"
   >
     Frontend engineer turning complex ideas into products people genuinely enjoy
     using. Happiest when a hard problem finally clicks, or when I'm losing
@@ -92,17 +92,17 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </header>
 
 <!-- About -->
-<section id="about" class="pt-18 max-[640px]:pt-14">
+<section id="about" class="pt-14 sm:pt-18">
   <h2
-    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    class="font-heading mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
   >
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Who I am
   </h2>
   <div
-    class="flex flex-col gap-5 text-[16px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
+    class="flex flex-col gap-5 leading-7 text-[color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
   >
-    <p class="m-0">
+    <p class="">
       I'm a <span class="text-ink font-extrabold"
         >frontend-focused engineer</span
       > with 2+ years of professional experience building modern web and mobile applications.
@@ -113,14 +113,14 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
       make complex products easier for people to use.
     </p>
 
-    <p class="m-0">
+    <p class="">
       I like interfaces that feel a little
       <span class="text-ink font-extrabold"> handmade</span>, something that
       makes you pause for a second. Behind every polished screen is a series of
       small decisions and hard problems. That's the part I enjoy most.
     </p>
 
-    <p class="m-0">
+    <p class="">
       I'm always chasing that point where thoughtful engineering fades into the
       background and all that's left is a product that simply <span
         class="text-ink font-extrabold">feels right to use.</span
@@ -130,9 +130,9 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </section>
 
 <!-- Skills -->
-<section id="skills" class="pt-18 max-[640px]:pt-14">
+<section id="skills" class="pt-14 sm:pt-18">
   <h2
-    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    class="font-heading mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
   >
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     What I work with
@@ -167,7 +167,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 
       {/* Code */}
       <div
-        class="font-mono overflow-x-auto py-5 text-[14px] leading-6 text-[#f3f2f2] max-[640px]:text-[12.5px]"
+        class="font-mono overflow-x-auto py-5 text-[12.5px] leading-6 text-[#f3f2f2] sm:text-[14px]"
       >
         <div class="flex gap-5 px-4 hover:bg-[rgba(243,242,242,0.07)]">
           <span
@@ -285,9 +285,9 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </section>
 
 <!-- Projects -->
-<section id="projects" class="pt-18 max-[640px]:pt-14">
+<section id="projects" class="pt-14 sm:pt-18">
   <h2
-    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    class="font-heading mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
   >
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Things I've built
@@ -295,7 +295,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
   <div class="flex flex-col">
     {
       PROJECTS.map((project) => (
-        <article class="group border-ink/15 grid grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] items-center gap-7.5 border-t-2 py-9.5 max-[640px]:grid-cols-1 max-[640px]:gap-5.5">
+        <article class="group border-ink/15 grid grid-cols-1 items-center gap-5.5 border-t-2 py-9.5 sm:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] sm:gap-7.5">
           <div class="relative">
             {/* Shadow */}
             <div
@@ -304,7 +304,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             />
 
             {/* Card */}
-            <figure class="border-ink relative m-0 w-full overflow-hidden rounded-[14px] border-2 transition-transform duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 will-change-transform">
+            <figure class="border-ink relative  w-full overflow-hidden rounded-[14px] border-2 transition-transform duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 will-change-transform">
               <Image
                 src={project.imgSrc}
                 alt={project.title}
@@ -316,10 +316,10 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             </figure>
           </div>
           <div class="flex min-w-0 flex-col gap-3">
-            <h3 class="font-heading text-ink m-0 text-[26px] leading-[1.08] font-bold tracking-[-0.015em] transition-colors duration-140 ease-[ease] group-hover:text-accent">
+            <h3 class="font-heading text-ink  text-[26px] leading-[1.08] font-bold tracking-[-0.015em] transition-colors duration-140 ease-[ease] group-hover:text-accent">
               {project.title}
             </h3>
-            <p class="m-0 text-[15px] leading-[26px] text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
+            <p class=" text-[15px] leading-[26px] text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
               {project.description}
             </p>
             <div class="flex flex-wrap gap-1.75 pt-0.5">
@@ -381,9 +381,9 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </section>
 
 <!-- Experience -->
-<section id="experience" class="pt-18 max-[640px]:pt-14">
+<section id="experience" class="pt-14 sm:pt-18">
   <h2
-    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    class="font-heading mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
   >
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Where I've been
@@ -391,15 +391,15 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
   <div class="flex flex-col">
     {
       JOBS.map((job) => (
-        <div class="border-ink/20 grid grid-cols-[140px_1fr] gap-x-6 gap-y-2 border-t-2 py-6 max-[640px]:grid-cols-1 max-[640px]:gap-1.5">
-          <p class="m-0 text-[13px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_55%,transparent)] font-features-['tnum'_1]">
+        <div class="border-ink/20 grid grid-cols-1 gap-1.5 border-t-2 py-6 sm:grid-cols-[140px_1fr] sm:gap-x-6 sm:gap-y-2">
+          <p class=" text-[13px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_55%,transparent)] font-features-['tnum'_1]">
             {job.dates}
           </p>
           <div class="flex flex-col gap-1.5">
-            <p class="font-heading m-0 text-[17px] font-bold">
+            <p class="font-heading  text-[17px] font-bold">
               {job.role} · {job.company}
             </p>
-            <p class="m-0 text-[14px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_70%,transparent)]">
+            <p class=" text-[14px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_70%,transparent)]">
               {job.summary}
             </p>
           </div>
@@ -410,22 +410,16 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </section>
 
 <!-- Writing -->
-<section id="writing" class="pt-18 max-[640px]:pt-14">
+<section id="writing" class="pt-14 sm:pt-18">
   <div class="mb-7 flex flex-wrap items-baseline justify-between gap-4.5">
     <h2
-      class="font-heading m-0 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+      class="font-heading flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
     >
       <span aria-hidden="true" class="text-[0.85em]">📌</span>
       What I've written
     </h2>
-    <a
-      href="/blog"
-      class="group font-heading text-ink inline-flex items-center gap-1 text-[13px] font-bold tracking-[0.06em] uppercase underline decoration-2 underline-offset-4 transition-colors duration-150 ease-[ease] hover:text-accent"
-    >
-      All posts
-    </a>
   </div>
-  <div class="grid grid-cols-3 gap-3.5 max-[720px]:grid-cols-1">
+  <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
     {
       BLOG_POSTS.map((post) => (
         <div class="group relative">
@@ -467,9 +461,9 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
 </section>
 
 <!-- Contact -->
-<section id="contact" class="pt-18 max-[640px]:pt-14">
+<section id="contact" class="pt-14 sm:pt-18">
   <h2
-    class="font-heading m-0 mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
+    class="font-heading mb-7 flex items-center gap-3 text-[26px] font-bold tracking-[-0.01em]"
   >
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Let's talk
@@ -483,13 +477,13 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     <div
       class="border-ink bg-accent text-paper relative rounded-[18px] border-[3px]"
     >
-      <div class="px-6 py-9 max-[640px]:px-5 max-[640px]:py-7">
+      <div class="px-5 py-7 sm:px-6 sm:py-9">
         <h3
-          class="font-heading ml-[-0.04em] m-0 mb-4 text-[clamp(28px,4.5vw,44px)] leading-[1.02] font-bold tracking-[-0.01em] uppercase"
+          class="font-heading ml-[-0.04em] mb-4 text-[clamp(28px,4.5vw,44px)] leading-[1.02] font-bold tracking-[-0.01em] uppercase"
         >
           Let's build<br />something.
         </h3>
-        <p class="font-heading m-0 mb-6 text-[15px] font-bold">
+        <p class="font-heading mb-6 text-[15px] font-bold">
           The fastest way to reach me is email. I read everything, even the
           weird ones.
         </p>

@@ -52,7 +52,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
     class="flex max-w-180 flex-col gap-5.5 border-b border-ink/28 pt-10 pb-8.5"
   >
     <h1
-      class="font-heading m-0 ml-[-0.04em] text-[clamp(34px,5.2vw,52px)] leading-[1.05] font-bold tracking-tight"
+      class="font-heading ml-[-0.04em] text-[clamp(34px,5.2vw,52px)] leading-[1.05] font-bold tracking-tight"
     >
       {title}
     </h1>
@@ -87,14 +87,14 @@ const toc = headings.filter((heading) => heading.depth === 2);
   }
 
   <div
-    class="grid grid-cols-[minmax(0,1fr)_minmax(170px,200px)] items-start gap-10 mt-10 max-[820px]:grid-cols-1"
+    class="grid grid-cols-1 items-start gap-10 mt-10 md:grid-cols-[minmax(0,1fr)_minmax(170px,200px)]"
   >
     <article class="blog">
       <Content />
     </article>
 
     <aside
-      class="sticky top-11 flex max-h-[calc(100vh-88px)] flex-col gap-4.5 self-start overflow-y-auto overflow-x-hidden max-[820px]:hidden"
+      class="sticky top-11 hidden max-h-[calc(100vh-88px)] flex-col gap-4.5 self-start overflow-y-auto overflow-x-hidden md:flex"
     >
       <div
         class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-ink/40 uppercase"
