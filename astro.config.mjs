@@ -47,22 +47,22 @@ export default defineConfig({
 
     {
       provider: fontProviders.local(),
-      name: "Space Grotesk",
-      cssVariable: "--font-space-grotesk",
+      name: "Satoshi",
+      cssVariable: "--font-satoshi",
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/space-grotesk-400.woff2"],
+            src: ["./src/assets/fonts/satoshi-400.woff2"],
             weight: 400,
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/space-grotesk-500.woff2"],
+            src: ["./src/assets/fonts/satoshi-500.woff2"],
             weight: 500,
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/space-grotesk-700.woff2"],
+            src: ["./src/assets/fonts/satoshi-700.woff2"],
             weight: 700,
             style: "normal",
           },
@@ -72,17 +72,17 @@ export default defineConfig({
 
     {
       provider: fontProviders.local(),
-      name: "Space Mono",
-      cssVariable: "--font-space-mono",
+      name: "Geist Mono",
+      cssVariable: "--font-geist-mono",
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/space-mono-400.woff2"],
+            src: ["./src/assets/fonts/geist-mono-400.woff2"],
             weight: 400,
             style: "normal",
           },
           {
-            src: ["./src/assets/fonts/space-mono-700.woff2"],
+            src: ["./src/assets/fonts/geist-mono-700.woff2"],
             weight: 700,
             style: "normal",
           },
