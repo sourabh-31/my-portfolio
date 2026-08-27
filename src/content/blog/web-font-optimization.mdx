@@ -28,7 +28,7 @@ A typical setup looks like this:
 fonts/
 ├── geist-400.woff2
 ├── geist-700.woff2
-└── space-mono-400.woff2
+└── geist-mono-400.woff2
 ```
 
 Not this:
@@ -144,8 +144,8 @@ A custom font isn't guaranteed to be available the instant a page renders. Your 
 ```css
 :root {
   --font-sans: "Geist", system-ui, sans-serif;
-  --font-heading: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "Space Mono", ui-monospace, monospace;
+  --font-heading: "Satoshi", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 }
 ```
 
@@ -186,8 +186,8 @@ That said, `swap` isn't the right choice everywhere. For a font that's more of a
 
 ```css
 @font-face {
-  font-family: "Space Mono";
-  src: url("/fonts/space-mono-400.woff2") format("woff2");
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: optional;
@@ -216,8 +216,8 @@ That's genuinely valuable when a font is required to render important above-the-
 
 ```text
 Geist 400, Geist 700
-Space Grotesk 400, Space Grotesk 500, Space Grotesk 700
-Space Mono 400, Space Mono 700
+Satoshi 400, Satoshi 500, Satoshi 700
+Geist Mono 400, Geist Mono 700
 ```
 
 Preload all seven and you've told the browser all seven are critical, which means they now compete with your HTML, CSS, and images for bandwidth right when it matters most. A better approach is to look at what's actually visible above the fold, identify the specific weights that content needs, and preload only those. Everything else can load the normal way. In Astro, either the framework's font tooling or an explicit preload hint works for this, as long as you're deliberate about which variants make the list.
@@ -315,9 +315,9 @@ src/
     └── fonts/
         ├── geist-400.woff2
         ├── geist-700.woff2
-        ├── space-grotesk-400.woff2
-        ├── space-grotesk-700.woff2
-        └── space-mono-400.woff2
+        ├── satoshi-400.woff2
+        ├── satoshi-700.woff2
+        └── geist-mono-400.woff2
 ```
 
 With only those variants defined:
@@ -340,24 +340,24 @@ With only those variants defined:
 }
 
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("/fonts/space-grotesk-400.woff2") format("woff2");
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("/fonts/space-grotesk-700.woff2") format("woff2");
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Space Mono";
-  src: url("/fonts/space-mono-400.woff2") format("woff2");
+  font-family: "Geist Mono";
+  src: url("/fonts/geist-mono-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -369,8 +369,8 @@ And exposed through a consistent font stack:
 ```css
 :root {
   --font-sans: "Geist", system-ui, sans-serif;
-  --font-heading: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "Space Mono", ui-monospace, monospace;
+  --font-heading: "Satoshi", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 }
 ```
 
