@@ -1,5 +1,4 @@
 import pinseiImg from "../assets/pinsei.png";
-import forgeImg from "../assets/forge.png";
 import typeSafeApisWithTrpcImg from "../assets/blog/type-safe-apis-with-trpc.png";
 import webRenderingPatternImg from "../assets/blog/web-rendering-pattern.png";
 import webFontOptimizationImg from "../assets/blog/web-font-optimization.png";
@@ -18,17 +17,8 @@ export const PROJECTS = [
       "A modern bookmark manager built with Next.js and Supabase featuring instant search, collections, optimistic UI updates, and real-time synchronization for managing thousands of saved links.",
     tags: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
     imgSrc: pinseiImg,
-    codeHref: "https://github.com/sourabh-31/bookmark-manager",
+    codeHref: "https://github.com/sourabh-31/pinsei-bookmark-manager",
     visitHref: "https://www.pinsei.com",
-  },
-  {
-    title: "Forge",
-    description:
-      "A visual prompt chain builder to design, test, and deploy AI workflows through a fast, minimal node-based interface built for real-world use.",
-    tags: ["React", "TypeScript", "React Flow", "Tailwind CSS"],
-    imgSrc: forgeImg,
-    codeHref: "https://github.com/sourabh-31/prompt-chain-builder",
-    visitHref: "https://prompt-chain-builder.vercel.app",
   },
 ];
 
