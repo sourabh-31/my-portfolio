@@ -130,4 +130,8 @@
   .blog summary {
     @apply font-heading cursor-pointer font-semibold;
   }
+
+  .expressive-code {
+    margin-bottom: 2rem;
+  }
 }

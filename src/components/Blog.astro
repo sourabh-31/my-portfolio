@@ -11,9 +11,7 @@ const [featured, ...rest] = BLOG_POSTS;
   >
     Welcome to the blog
   </h1>
-  <p
-    class="max-w-[60ch] text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_74%,transparent)]"
-  >
+  <p class="max-w-[60ch] text-[17px] leading-7 text-ink/80">
     This is where I write about the things I'm learning, building, and
     exploring. Some articles are technical, others are practical, but they're
     all written with the hope that someone else finds them useful.
@@ -48,7 +46,7 @@ const [featured, ...rest] = BLOG_POSTS;
     >
       {featured.title}
     </span>
-    <span class="mt-4 text-ink/65">
+    <span class="mt-4 text-ink/80">
       {featured.excerpt}
     </span>
     <span
@@ -108,7 +106,7 @@ const [featured, ...rest] = BLOG_POSTS;
         <span class="font-heading text-[21px] leading-[1.26] font-bold tracking-[-0.015em] group-hover:text-accent">
           {post.title}
         </span>
-        <span class=" text-[15px] leading-6.25 text-ink/65">
+        <span class=" text-[15px] leading-6.25 text-ink/80">
           {post.excerpt}
         </span>
         <span class="font-heading flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[10.5px] font-semibold tracking-[0.1em] text-ink/45 uppercase">

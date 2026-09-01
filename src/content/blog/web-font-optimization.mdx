@@ -26,18 +26,18 @@ A typical setup looks like this:
 
 ```text
 fonts/
-├── geist-400.woff2
-├── geist-700.woff2
-└── geist-mono-400.woff2
+├── dm-sans-400.woff2
+├── dm-sans-700.woff2
+└── ibm-plex-mono-400.woff2
 ```
 
 Not this:
 
 ```text
-geist-400.ttf
-geist-400.otf
-geist-400.woff
-geist-400.woff2
+dm-sans-400.ttf
+dm-sans-400.otf
+dm-sans-400.woff
+dm-sans-400.woff2
 ```
 
 But the format is only half the story. A well-compressed font you don't actually need is still unnecessary bytes on the wire.
@@ -64,15 +64,15 @@ Your design almost certainly doesn't use all nine. If your site only ever render
 
 ```css
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-400.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-700.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -89,17 +89,17 @@ Variable fonts are useful, but they aren't automatically faster, and that's wort
 A static setup might be three separate files:
 
 ```text
-Geist-400.woff2
-Geist-500.woff2
-Geist-700.woff2
+dm-sans-400.woff2
+dm-sans-500.woff2
+dm-sans-700.woff2
 ```
 
 A variable font collapses that into one file, with the weight controlled in CSS:
 
 ```css
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-variable.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-variable.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
 }
@@ -143,9 +143,9 @@ A custom font isn't guaranteed to be available the instant a page renders. Your 
 
 ```css
 :root {
-  --font-sans: "Geist", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
   --font-heading: "Satoshi", system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 ```
 
@@ -172,8 +172,8 @@ For most sites, `swap` is a sensible default:
 
 ```css
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-400.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -186,8 +186,8 @@ That said, `swap` isn't the right choice everywhere. For a font that's more of a
 
 ```css
 @font-face {
-  font-family: "Geist Mono";
-  src: url("/fonts/geist-mono-400.woff2") format("woff2");
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: optional;
@@ -205,7 +205,7 @@ Preloading tells the browser to fetch a resource earlier than it would discover 
 ```html
 <link
   rel="preload"
-  href="/fonts/geist-400.woff2"
+  href="/fonts/dm-sans-400.woff2"
   as="font"
   type="font/woff2"
   crossorigin
@@ -215,9 +215,9 @@ Preloading tells the browser to fetch a resource earlier than it would discover 
 That's genuinely valuable when a font is required to render important above-the-fold content. It's also easy to overdo. Say your page defines seven font variants:
 
 ```text
-Geist 400, Geist 700
+DM Sans 400, DM Sans 700
 Satoshi 400, Satoshi 500, Satoshi 700
-Geist Mono 400, Geist Mono 700
+IBM Plex Mono 400, IBM Plex Mono 700
 ```
 
 Preload all seven and you've told the browser all seven are critical, which means they now compete with your HTML, CSS, and images for bandwidth right when it matters most. A better approach is to look at what's actually visible above the fold, identify the specific weights that content needs, and preload only those. Everything else can load the normal way. In Astro, either the framework's font tooling or an explicit preload hint works for this, as long as you're deliberate about which variants make the list.
@@ -313,27 +313,27 @@ A simple production setup might look like this:
 src/
 └── assets/
     └── fonts/
-        ├── geist-400.woff2
-        ├── geist-700.woff2
+        ├── dm-sans-400.woff2
+        ├── dm-sans-700.woff2
         ├── satoshi-400.woff2
         ├── satoshi-700.woff2
-        └── geist-mono-400.woff2
+        └── ibm-plex-mono-400.woff2
 ```
 
 With only those variants defined:
 
 ```css
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-400.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Geist";
-  src: url("/fonts/geist-700.woff2") format("woff2");
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -356,8 +356,8 @@ With only those variants defined:
 }
 
 @font-face {
-  font-family: "Geist Mono";
-  src: url("/fonts/geist-mono-400.woff2") format("woff2");
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -368,9 +368,9 @@ And exposed through a consistent font stack:
 
 ```css
 :root {
-  --font-sans: "Geist", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
   --font-heading: "Satoshi", system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 ```
 

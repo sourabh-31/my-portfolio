@@ -14,7 +14,7 @@ export const PROJECTS = [
   {
     title: "Pinsei",
     description:
-      "A modern bookmark manager built with React.js and Supabase featuring instant search, collections, optimistic UI updates, and real-time synchronization for managing thousands of saved links.",
+      "A modern bookmark manager built with React.js and Supabase featuring instant search, collections and real-time synchronization for managing thousands of saved links.",
     tags: ["React.js", "TypeScript", "Supabase", "Tailwind CSS"],
     imgSrc: pinseiImg,
     codeHref: "https://github.com/sourabh-31/pinsei-bookmark-manager",

@@ -27,7 +27,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
 <BlogLayout>
   <a
     href="/blog"
-    class="font-heading group inline-flex items-center gap-2.5 text-sm leading-5 font-medium text-ink/62 transition-colors duration-160 hover:text-accent"
+    class="font-heading group inline-flex items-center gap-2.5 text-sm leading-5 font-medium text-ink/70 transition-colors duration-160 hover:text-accent"
   >
     <span class="inline-flex">
       <svg
@@ -47,18 +47,18 @@ const toc = headings.filter((heading) => heading.depth === 2);
   </a>
 
   <header
-    class="flex max-w-180 flex-col gap-5.5 border-b border-ink/28 pt-10 pb-8.5"
+    class="flex max-w-180 flex-col gap-5.5 border-b border-ink/25 pt-10 pb-8.5"
   >
     <h1
       class="font-heading ml-[-0.04em] text-[clamp(34px,5.2vw,52px)] leading-[1.05] font-bold tracking-tight"
     >
       {title}
     </h1>
-    <p class="text-[18.5px] leading-7.5 text-ink/72">
+    <p class="text-[18.5px] leading-7.5 text-ink/70">
       {description}
     </p>
     <div
-      class="font-heading mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm leading-5 font-medium text-ink/58"
+      class="font-heading mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm leading-5 font-medium text-ink/60"
     >
       <span>{publishDate}</span>
       <span aria-hidden="true" class="bg-accent h-1.25 w-1.25 shrink-0"></span>
@@ -102,7 +102,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
       <nav aria-label="Table of contents" class="relative flex flex-col">
         <span
           aria-hidden="true"
-          class="absolute inset-y-0 left-0 w-px bg-ink/18"></span>
+          class="absolute inset-y-0 left-0 w-px bg-ink/20"></span>
         <span
           aria-hidden="true"
           data-toc-thumb

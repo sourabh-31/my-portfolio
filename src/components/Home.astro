@@ -10,9 +10,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
   >
     Hi, I'm Sourabh 👋
   </h1>
-  <p
-    class="text-[17px] leading-7 text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]"
-  >
+  <p class="text-lg text-ink/80">
     Frontend engineer turning complex ideas into products people genuinely enjoy
     using. Happiest when a hard problem finally clicks, or when I'm losing
     gracefully at a video game. JK 😉. I don't lose often.
@@ -117,13 +115,11 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     <span aria-hidden="true" class="text-[0.85em]">📌</span>
     Who I am
   </h2>
-  <div
-    class="flex flex-col gap-5 leading-7 text-[color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
-  >
+  <div class="flex flex-col gap-5 text-[17px] leading-7 text-ink/80">
     <p class="">
-      I'm a <span class="text-ink font-bold">frontend-focused engineer</span> with
+      I am a <span class="text-ink font-bold">frontend-focused engineer</span> with
       2+ years of professional experience building modern web and mobile applications.
-      Over the past couple of years, I've built products in {" "}
+      Over the past couple of years, I have built products in {" "}
       <span class="bg-accent/25"> AdTech </span>, {" "}
       <span class="bg-accent/25"> trading </span>, and {" "}
       <span class="bg-accent/25"> affiliate marketing </span>, learning how to
@@ -138,7 +134,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
     </p>
 
     <p class="">
-      I'm always chasing that point where thoughtful engineering fades into the
+      I am always chasing that point where thoughtful engineering fades into the
       background and all that's left is a product that simply <span
         class="text-ink font-bold">feels right to use.</span
       >
@@ -316,12 +312,12 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
           <div class="relative">
             {/* Shadow */}
             <div
-              class="bg-ink absolute inset-0 rounded-[14px] transition-transform duration-140 ease-[ease] group-hover:translate-x-0.75 group-hover:translate-y-0.75"
+              class="bg-ink absolute inset-0 rounded-[14px] translate-x-0.75 translate-y-0.75"
               aria-hidden="true"
             />
 
             {/* Card */}
-            <figure class="border-ink relative  w-full overflow-hidden rounded-[14px] border-2 transition-transform duration-140 ease-[ease] group-hover:-translate-x-0.75 group-hover:-translate-y-0.75 will-change-transform">
+            <figure class="border-ink relative  w-full overflow-hidden rounded-[14px] border-2 -translate-x-0.75 -translate-y-0.75">
               <Image
                 src={project.imgSrc}
                 alt={project.title}
@@ -336,12 +332,10 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             <h3 class="font-heading text-ink  text-[26px] leading-[1.08] font-bold tracking-[-0.015em] transition-colors duration-140 ease-[ease] group-hover:text-accent">
               {project.title}
             </h3>
-            <p class="text-[15px] leading-[26px] text-[color-mix(in_srgb,var(--color-ink)_78%,transparent)]">
-              {project.description}
-            </p>
+            <p class="text-ink/80">{project.description}</p>
             <div class="flex flex-wrap gap-1.75 pt-0.5">
               {project.tags.map((tag) => (
-                <span class="text-tag-ink rounded-full bg-[rgba(236,48,19,0.14)] px-2.5 py-1 text-[11px] tracking-wide font-display font-medium">
+                <span class="text-tag-ink rounded-md bg-[rgba(236,48,19,0.14)] px-2.5 py-1 text-[11px]">
                   {tag}
                 </span>
               ))}
@@ -416,9 +410,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             <p class="font-heading  text-[17px] font-bold">
               {job.role} · {job.company}
             </p>
-            <p class=" text-[14px] leading-6 text-[color-mix(in_srgb,var(--color-ink)_70%,transparent)]">
-              {job.summary}
-            </p>
+            <p class=" text-[15px] leading-6 text-ink/80">{job.summary}</p>
           </div>
         </div>
       ))
@@ -461,7 +453,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
             <span class="font-heading text-ink line-clamp-2 text-[17px] leading-[1.24] font-bold transition-colors duration-140 ease-[ease] group-hover:text-accent">
               {post.title}
             </span>
-            <span class="line-clamp-3 text-[13.5px] leading-5.5 text-[color-mix(in_srgb,var(--color-ink)_68%,transparent)]">
+            <span class="line-clamp-3 text-[14px] leading-5 text-ink/80">
               {post.excerpt}
             </span>
             <span
@@ -506,7 +498,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
         </p>
         <a
           href={`mailto:${SITE.email}`}
-          class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink font-heading inline-flex items-center gap-2 rounded-[10px] border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase"
+          class="bg-ink text-paper border-ink hover:bg-paper hover:text-ink inline-flex items-center gap-2 rounded-[10px] border-2 px-6 py-4 sm:text-[15px] text-[11px] font-bold tracking-[0.06em] uppercase font-heading"
         >
           {SITE.email}
           <svg
