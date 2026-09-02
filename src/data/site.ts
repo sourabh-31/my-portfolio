@@ -1,4 +1,5 @@
 import pinseiImg from "../assets/pinsei.png";
+import pinseiExtensionImg from "../assets/pinsei-extension.png";
 import theUnreliableNetworkImg from "../assets/blog/the-unreliable-network.png";
 import typeSafeApisWithTrpcImg from "../assets/blog/type-safe-apis-with-trpc.png";
 import webRenderingPatternImg from "../assets/blog/web-rendering-pattern.png";
@@ -20,6 +21,15 @@ export const PROJECTS = [
     imgSrc: pinseiImg,
     codeHref: "https://github.com/sourabh-31/pinsei-bookmark-manager",
     visitHref: "https://www.pinsei.com",
+  },
+  {
+    title: "Pinsei Firefox Extension",
+    description:
+      "A Firefox browser extension for saving and organizing bookmarks instantly, with quick access to Pinsei folders and seamless synchronization with your bookmark library.",
+    tags: ["React.js", "Firefox WebExtension"],
+    imgSrc: pinseiExtensionImg,
+    codeHref: "https://github.com/sourabh-31/pinsei-browser-extension",
+    visitHref: "https://addons.mozilla.org/addon/pinsei-com",
   },
 ];
 
