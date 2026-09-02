@@ -36,7 +36,7 @@ export const PROJECTS = [
 export const BLOG_POSTS = [
   {
     slug: "the-unreliable-network",
-    title: "The Network is the Most Unreliable Part of Your Frontend",
+    title: "The Network Is the Most Unreliable Part of Your Frontend",
     date: "02 Sep 2026",
     read: "9 min",
     tags: ["Web Development", "Frontend Architecture"],
