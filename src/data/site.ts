@@ -1,4 +1,5 @@
 import pinseiImg from "../assets/pinsei.png";
+import theUnreliableNetworkImg from "../assets/blog/the-unreliable-network.png";
 import typeSafeApisWithTrpcImg from "../assets/blog/type-safe-apis-with-trpc.png";
 import webRenderingPatternImg from "../assets/blog/web-rendering-pattern.png";
 import webFontOptimizationImg from "../assets/blog/web-font-optimization.png";
@@ -23,6 +24,16 @@ export const PROJECTS = [
 ];
 
 export const BLOG_POSTS = [
+  {
+    slug: "the-unreliable-network",
+    title: "The Network Is the Most Unreliable Part of Your Frontend",
+    date: "02 Sep 2026",
+    read: "9 min",
+    tags: ["Web Development", "Frontend Architecture"],
+    excerpt:
+      "A practical guide to seven network problems frontend developers face, with working code, real-world solutions, and a look at what popular data-fetching libraries handle for you.",
+    img: theUnreliableNetworkImg,
+  },
   {
     slug: "type-safe-apis-with-trpc",
     title: "Stop Manually Typing Your API Responses in TypeScript",

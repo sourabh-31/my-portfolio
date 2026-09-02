@@ -1,0 +1,342 @@
+---
+title: "The Network Is the Most Unreliable Part of Your Frontend"
+description: A practical guide to seven network problems frontend developers face, with working code, real-world solutions, and a look at what popular data-fetching libraries handle for you.
+publishDate: 02 Sep 2026
+readingTime: 9
+cover: "../../assets/blog/the-unreliable-network.png"
+tags:
+  - Web Development
+  - Frontend Architecture
+---
+
+```js
+const response = await fetch("/api/posts");
+```
+
+Behind this one line, your browser asks another computer for data. It sends that request over a connection you don't own and can't control. You don't control the user's Wi-Fi. You don't control how busy the network is, how far away the server is, or whether the API is having a bad day.
+
+In 1994, engineers at Sun Microsystems wrote down a list of assumptions developers make when their code talks to another machine over a network. The first one on the list was "the network is reliable."
+
+Thirty years later, we still write fetch calls as if it were true.
+
+That one assumption is the source of everything below. When you call an API, you're not reading a variable. You're sending a message to a system that can be slow, can fail halfway, can answer out of order, and can succeed without ever telling you. Frontend work has meant talking to remote machines for a long time. We just called it "data fetching" instead.
+
+Here are seven problems that follow from that, and what the code actually looks like when you handle them.
+
+---
+
+## 1. Request waterfalls
+
+Each round trip to the server costs roughly 300ms. You can't change that. You _can_ change how many of them the user pays for one after another.
+
+```js
+const user = await fetchUser(); // 300ms
+const posts = await fetchPosts(); // 300ms
+const comments = await fetchComments(); // 300ms
+// 900ms before anything renders
+```
+
+Three requests, none depending on each other, run one at a time. That's a **request waterfall**, and you wrote it. The network didn't do this to you.
+
+```js
+const [user, posts, comments] = await Promise.all([
+  fetchUser(),
+  fetchPosts(),
+  fetchComments(),
+]);
+// 300ms
+```
+
+The trickier case is when only _some_ requests depend on each other. `posts` needs the user's ID, but `comments` needs nothing. `Promise.all` won't help, so most people give up and write this:
+
+```js
+const user = await fetchUser(); // 300ms
+const posts = await fetchPosts(user.id); // 300ms, genuinely has to wait
+const comments = await fetchComments(); // 300ms, waiting for no reason
+// 900ms
+```
+
+Only one of those waits is real. `comments` is last purely because of where you typed it.
+
+The fix relies on one property of promises that's easy to miss:
+
+> **Calling an async function starts the request immediately. `await` only decides when you stop and wait for the result.**
+
+So start it early and collect it late:
+
+```js
+const commentsPromise = fetchComments(); // fires right now
+const user = await fetchUser();
+const posts = await fetchPosts(user.id);
+const comments = await commentsPromise; // already finished, no wait
+// 600ms
+```
+
+```text
+Before (900ms)
+0ms         300ms       600ms       900ms
+|-----------|-----------|-----------|
+[ fetchUser ]
+            [fetchPosts ]
+                        [ comments  ]
+
+After (600ms)
+0ms         300ms       600ms
+|-----------|-----------|
+[ fetchUser ][fetchPosts ]
+[ comments  ]  <- done at 300ms, just sitting there
+```
+
+Same requests, same dependencies, 300ms saved by moving one line.
+
+Waterfalls also hide in places that don't look like `await` chains: a child that only starts fetching once its parent renders, a route that fetches on mount instead of on navigation, a `useEffect` waiting on state set by another `useEffect`. When a page feels slow, the question is rarely "how fast is my API?" It's **how many times in a row did I make the user wait?**
+
+---
+
+## 2. Timeouts
+
+Not every failure announces itself. Some requests just hang, and your UI says `Loading…` for forty seconds.
+
+A timeout is you deciding ahead of time how long "too long" is. `AbortSignal.timeout()` does this for you:
+
+```js
+const res = await fetch("/api/posts", {
+  signal: AbortSignal.timeout(8000),
+});
+```
+
+Usually you also want your _own_ cancellation, for when the user navigates away or the component unmounts. `AbortSignal.any()` combines both signals, and whichever one fires first wins:
+
+```js
+const controller = new AbortController();
+
+const res = await fetch("/api/posts", {
+  signal: AbortSignal.any([AbortSignal.timeout(8000), controller.signal]),
+});
+```
+
+Choose the number on purpose. Eight seconds is reasonable for a page load and far too long for a search box. Also check why the request was aborted: a timeout should show an error, but a cancel the user caused should show nothing at all.
+
+---
+
+## 3. Retries (the part everyone gets wrong)
+
+A bad retry is just a loop. A good retry follows four rules, and skipping any of them makes things worse instead of better.
+
+**Only retry what's safe.** Reading data twice is harmless, so retrying a `GET` costs you nothing. Retrying `POST /payment` can charge someone twice, because a request that failed on your end may have already succeeded on the server's. Making that safe takes more than a retry loop, and section 7 covers it.
+
+**Only retry what might succeed.** A 400 means your request was wrong. It will still be wrong two seconds later. Retry 408, 425, 429, and 5xx errors. Don't retry other 4xx errors.
+
+**Wait longer after each failure.** Hammering a struggling server is how you keep it struggling.
+
+**Add randomness.** This is the rule people skip. Say ten thousand users all fail at the same moment, and every one of them waits exactly 1s, then 2s, then 4s. They all retry at the same instant, again and again. You've just built an attack on your own recovering server. This is called the thundering herd, and adding a random delay breaks up the wave.
+
+```js
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const RETRYABLE = new Set([408, 425, 429, 500, 502, 503, 504]);
+
+async function fetchWithRetry(
+  url,
+  options = {},
+  { attempts = 3, baseMs = 300 } = {},
+) {
+  let lastError;
+
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const res = await fetch(url, {
+        ...options,
+        signal: AbortSignal.any(
+          [AbortSignal.timeout(8000), options.signal].filter(Boolean),
+        ),
+      });
+
+      if (res.ok) return res;
+
+      // Client errors won't fix themselves. Fail fast.
+      if (!RETRYABLE.has(res.status)) {
+        throw new HttpError(res.status, await res.text());
+      }
+
+      lastError = new HttpError(res.status);
+
+      // If the server told us when to come back, listen to it.
+      const retryAfter = Number(res.headers.get("Retry-After"));
+      if (Number.isFinite(retryAfter) && retryAfter > 0) {
+        await sleep(retryAfter * 1000);
+        continue;
+      }
+    } catch (err) {
+      // The caller cancelled. That's not a failure to retry.
+      if (err.name === "AbortError") throw err;
+      if (err instanceof HttpError) throw err;
+      lastError = err;
+    }
+
+    // Full jitter: a random point in the backoff window, not the edge of it.
+    await sleep(Math.random() * baseMs * 2 ** attempt);
+  }
+
+  throw lastError;
+}
+```
+
+Look at what happens on `AbortError`: we rethrow it instead of retrying. A retry loop that ignores cancellation will keep firing requests for a component that disappeared thirty seconds ago.
+
+---
+
+## 4. Race conditions
+
+A user types `react`. Request A starts. They type `react tutorial`. Request B starts. B returns first. Then A returns and overwrites it, and the user is looking at results for a query they've already moved past.
+
+Here's the bug, in the form it usually ships in:
+
+```js
+useEffect(() => {
+  fetch(`/api/search?q=${query}`)
+    .then((r) => r.json())
+    .then(setResults); // ← whichever finishes last wins
+}, [query]);
+```
+
+The fix needs two parts, not one:
+
+```js
+useEffect(() => {
+  let stale = false;
+  const controller = new AbortController();
+
+  fetch(`/api/search?q=${query}`, { signal: controller.signal })
+    .then((r) => r.json())
+    .then((data) => {
+      if (!stale) setResults(data);
+    })
+    .catch((err) => {
+      if (err.name !== "AbortError") setError(err);
+    });
+
+  return () => {
+    stale = true;
+    controller.abort();
+  };
+}, [query]);
+```
+
+Why both? `abort()` stops the request, but if the response already came back and you're in the middle of parsing it, that old state update can still slip through. The `stale` flag is what actually guarantees correctness. The abort just saves bandwidth and server work.
+
+The rule applies well beyond React: **the order responses come back tells you nothing about the order you sent them.** Anywhere you save an async result into shared state, you need a way to ask "is this still the answer to the current question?"
+
+---
+
+## 5. Caching, and the half nobody shows you
+
+Caching is easy. Every tutorial shows you the easy half:
+
+```
+first request → server → store → later requests → cache
+```
+
+The hard half is knowing when what you stored stopped being true. Your cache says `Posts: A B C`. The server says `Posts: A B C D`. Nothing errored. Nothing retried. Your user is simply looking at the past.
+
+There are two ways to decide, and real apps use both:
+
+**Time-based.** "Trust this for 30 seconds." Simple and cheap, but wrong for anything the user just changed.
+
+**Event-based.** "The user created a post, so the post list is now out of date." Accurate, but you have to keep track of which writes affect which reads. That list is where the bugs hide.
+
+The pattern that ties them together is **optimistic update with rollback**: show the change instantly, keep the old state, put it back if the server disagrees.
+
+```js
+async function addTodo(input) {
+  const previous = queryClient.getQueryData(["todos"]);
+
+  // 1. Assume success. The UI updates now, not in 300ms.
+  queryClient.setQueryData(["todos"], (old) => [...old, optimistic(input)]);
+
+  try {
+    await createTodo(input);
+  } catch (err) {
+    // 2. We were wrong. Put it back and say so.
+    queryClient.setQueryData(["todos"], previous);
+    toast.error("Couldn't save that.");
+  } finally {
+    // 3. Either way, get the truth from the server.
+    queryClient.invalidateQueries({ queryKey: ["todos"] });
+  }
+}
+```
+
+Caching isn't really about storage. You're always trading **speed against truth**, and you make that trade for each query, not once for the whole app.
+
+---
+
+## 6. Duplicate requests
+
+The user clicks _Create Account_. Nothing visibly happens for 400ms. They click again.
+
+```
+POST /create-account
+POST /create-account
+```
+
+Double clicks are just the obvious cause. You also get duplicates from re-renders, from effects running twice (React Strict Mode does this on purpose in development, to expose exactly this kind of bug), from retries, and from users hitting back and forward too fast.
+
+Frontend defenses help, and you should use them: disable the button while the request is running, debounce the input, and drop duplicate requests that are already in flight. For search and normal data fetching, that's enough. A wasted `GET` only costs you a bit of bandwidth.
+
+For `Create order`, `Send message`, or `Make payment`, it isn't enough. Not because the frontend is careless, but because the frontend can't see the case that matters most.
+
+---
+
+## 7. Idempotency
+
+Here's the case the frontend can't see.
+
+You `POST /payment`. The server receives it. The payment **succeeds**. Then the connection drops before the response comes back. Your code sees a network error and reports failure. The user clicks _Pay Again_. They are charged twice.
+
+Disabling the button doesn't help here. From the browser's side, "it worked but the response got lost" and "it never arrived" look exactly the same. You can't tell them apart. Only the server knows which one happened.
+
+The fix is an **idempotency key**: a unique ID you attach to the request, so the server can spot a repeat and return the original result instead of doing the work twice.
+
+```js
+function CheckoutButton({ amount, currency }) {
+  // One key per payment attempt by the user, NOT per network retry.
+  const idempotencyKey = useRef(crypto.randomUUID());
+
+  async function pay() {
+    await fetchWithRetry("/api/payments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Idempotency-Key": idempotencyKey.current,
+      },
+      body: JSON.stringify({ amount, currency }),
+    });
+  }
+
+  // ...
+}
+```
+
+That comment is the whole point. If you generate the key inside the retry loop, every retry looks like a brand new payment to the server and you've built nothing. The rule is simple: **one key per payment the user is trying to make. The same key for every retry of that payment, and a new key for the next one.** If you also want to survive a page reload in the middle of checkout, store the key in `sessionStorage` so it outlives the component.
+
+This is the lesson worth taking from the whole list: **some frontend problems can't be fixed by the frontend.** Retries are only safe because the server made them safe. You need the backend to do its part, which means this belongs in the API design conversation, not in your `catch` block.
+
+---
+
+## You probably shouldn't hand-roll most of this
+
+All of this is worth understanding. Most of it isn't worth writing yourself, because it's already been solved.
+
+| Problem                          | TanStack Query | SWR           | RTK Query     |
+| -------------------------------- | -------------- | ------------- | ------------- |
+| Caching & staleness              | ✅             | ✅            | ✅            |
+| Deduplicating in-flight requests | ✅             | ✅            | ✅            |
+| Race conditions                  | ✅             | ✅            | ✅            |
+| Retries with backoff             | ✅             | ✅            | ✅            |
+| Cancellation                     | ✅             | partial       | ✅            |
+| Optimistic updates + rollback    | ✅             | ✅            | ✅            |
+| Timeouts                         | you            | you           | you           |
+| Idempotency keys                 | you + backend  | you + backend | you + backend |
+| Waterfalls                       | you            | you           | you           |
+
+Look at the bottom three rows. Libraries handle the problems that have one right answer. The problems that need a decision stay yours: how long is too long, what counts as "the same operation," and what actually depends on what. That's why understanding these ideas still matters even when you `npm install` the solution.

@@ -430,7 +430,7 @@ import { SITE, PROJECTS, JOBS, BLOG_POSTS } from "../data/site";
   </div>
   <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
     {
-      BLOG_POSTS.map((post) => (
+      BLOG_POSTS.slice(0, 3).map((post) => (
         <div class="group relative">
           <div
             class="bg-ink absolute inset-px rounded-[14px] transition-transform duration-120 ease-[ease] group-hover:translate-x-0.75 group-hover:translate-y-0.75"
