@@ -20,7 +20,7 @@ export const PROJECTS = [
     tags: ["React.js", "TypeScript", "Supabase", "Tailwind CSS"],
     imgSrc: pinseiImg,
     codeHref: "https://github.com/sourabh-31/pinsei-bookmark-manager",
-    visitHref: "https://www.pinsei.com",
+    visitHref: "https://pinsei.com",
   },
   {
     title: "Pinsei Firefox Extension",
