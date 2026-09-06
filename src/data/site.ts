@@ -1,3 +1,4 @@
+import dropseiImg from "../assets/dropsei.png";
 import pinseiImg from "../assets/pinsei.png";
 import pinseiExtensionImg from "../assets/pinsei-extension.png";
 import theUnreliableNetworkImg from "../assets/blog/the-unreliable-network.png";
@@ -13,6 +14,15 @@ export const SITE = {
 };
 
 export const PROJECTS = [
+  {
+    title: "Dropsei",
+    description:
+      "A peer-to-peer file transfer platform for sending files directly between devices, without uploading or storing them in the cloud. Share a link, connect, and transfer securely.",
+    tags: ["Next.js", "WebRTC", "PNPM Workspaces", "TailwindCSS"],
+    imgSrc: dropseiImg,
+    codeHref: "https://github.com/sourabh-31/dropsei-file-transfer",
+    visitHref: "https://dropsei.sourabhhaldar.com",
+  },
   {
     title: "Pinsei",
     description:
