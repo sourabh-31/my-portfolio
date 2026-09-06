@@ -32,8 +32,8 @@ export default defineConfig({
       options: {
         variants: [
           {
-            src: ["./src/assets/fonts/dm-sans-400.woff2"],
-            weight: 400,
+            src: ["./src/assets/fonts/dm-sans-450.woff2"],
+            weight: 450,
             style: "normal",
           },
           {
