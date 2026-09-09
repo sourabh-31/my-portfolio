@@ -88,7 +88,7 @@ export const BLOG_POSTS = [
 
 export const JOBS = [
   {
-    dates: "2026 – Present",
+    dates: "2026 – 2026",
     role: "Frontend Developer",
     company: "The Factual Holding Co.",
     summary:
