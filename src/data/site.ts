@@ -1,3 +1,4 @@
+import memoryLaneImg from "../assets/memory-lane.png";
 import dropseiImg from "../assets/dropsei.png";
 import pinseiImg from "../assets/pinsei.png";
 import pinseiExtensionImg from "../assets/pinsei-extension.png";
@@ -14,6 +15,15 @@ export const SITE = {
 };
 
 export const PROJECTS = [
+  {
+    title: "Memory Lane",
+    description:
+      "A cinematic music experience set across imagined worlds, combining an ambient playlist with immersive sci-fi landscapes and a quiet story about a traveler searching for home.",
+    tags: ["Astro", "Tailwind CSS"],
+    imgSrc: memoryLaneImg,
+    codeHref: "https://github.com/sourabh-31/memory-lane",
+    visitHref: "https://memory-lane.sourabhhaldar.com",
+  },
   {
     title: "Dropsei",
     description:
