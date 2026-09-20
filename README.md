@@ -2,7 +2,7 @@
 
 Personal one-page portfolio site built with Astro. Features an intro, skills, project showcases, experience timeline, and a contact section.
 
-🌐 **Live site:** [sourabhhaldar.com](https://sourabhhaldar.com)
+🌐 **Live site:** [sourabhhaldar.com](https://v1.sourabhhaldar.com)
 
 ## 🛠️ Stack
 
