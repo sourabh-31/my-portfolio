@@ -1,15 +1,15 @@
-# Sourabh Haldar — Portfolio
+# 👋 Sourabh Haldar's Portfolio
 
 Personal one-page portfolio site built with Astro. Features an intro, skills, project showcases, experience timeline, and a contact section.
 
-**Live site:** [sourabhhaldar.com](https://sourabhhaldar.com)
+🌐 **Live site:** [sourabhhaldar.com](https://sourabhhaldar.com)
 
-## Stack
+## 🛠️ Stack
 
-- [Astro](https://astro.build) — static site framework
-- TypeScript
+- ⚡ [Astro](https://astro.build): static site framework
+- 🔷 TypeScript
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 /
@@ -19,7 +19,7 @@ Personal one-page portfolio site built with Astro. Features an intro, skills, pr
 ├── src/
 │   ├── components/      # Astro components (Header, Footer, Home)
 │   ├── data/
-│   │   └── site.ts      # All content — projects, jobs, socials
+│   │   └── site.ts      # All content: projects, jobs, socials
 │   ├── layouts/
 │   │   └── Layout.astro
 │   ├── pages/
@@ -29,19 +29,23 @@ Personal one-page portfolio site built with Astro. Features an intro, skills, pr
 └── package.json
 ```
 
-To update content (projects, experience, socials), edit [src/data/site.ts](src/data/site.ts).
+✏️ To update content (projects, experience, socials), edit [src/data/site.ts](src/data/site.ts).
 
-## Commands
+## 🚀 Commands
 
-| Command        | Action                                      |
-| :------------- | :------------------------------------------ |
-| `pnpm install` | Install dependencies                        |
-| `pnpm dev`     | Start dev server at `localhost:4321`        |
-| `pnpm build`   | Build for production to `./dist/`           |
-| `pnpm preview` | Preview production build locally            |
+| Command        | Action                                |
+| :------------- | :------------------------------------ |
+| `pnpm install` | Install dependencies                  |
+| `pnpm dev`     | Start dev server at `localhost:4321`  |
+| `pnpm build`   | Build for production to `./dist/`     |
+| `pnpm preview` | Preview production build locally      |
 
-## Contact
+## 📬 Contact
 
-- GitHub: [github.com/sourabh-31](https://github.com/sourabh-31)
-- LinkedIn: [linkedin.com/in/sourabh-haldar](https://www.linkedin.com/in/sourabh-haldar)
-- Email: sourabhhaldarh@gmail.com
+- 🐙 GitHub: [github.com/sourabh-31](https://github.com/sourabh-31)
+- 💼 LinkedIn: [linkedin.com/in/sourabh-haldar](https://www.linkedin.com/in/sourabh-haldar)
+- ✉️ Email: sourabhhaldarh@gmail.com
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
