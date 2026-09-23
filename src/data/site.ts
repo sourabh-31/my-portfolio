@@ -22,7 +22,7 @@ export const PROJECTS = [
     tags: ["Astro", "Tailwind CSS"],
     imgSrc: memoryLaneImg,
     codeHref: "https://github.com/sourabh-31/memory-lane",
-    visitHref: "https://memory-lane.sourabhhaldar.com",
+    visitHref: "https://memorylane.sourabhhaldar.com",
   },
   {
     title: "Dropsei",
